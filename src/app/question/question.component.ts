@@ -330,6 +330,9 @@ export class QuestionComponent implements OnInit {
 
   getCheckedItemList() {
     this.checkedQuestionList = [];
+    for (let i = 0; i < this.checkedQuestionList.length; i++) {
+      this.checkedQuestionList[i].index = i + 1;
+    }
     this.duration = 0;
     this.totalMarks = 0;
     this.totalQuestions = 0;

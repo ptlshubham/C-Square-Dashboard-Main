@@ -16,17 +16,18 @@
                         <th class="text-right">Actions</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let vl of visitorList; let i = index">
-                            <td class="text-center">{{ i + 1 }}</td>
-                            <td class="text-center">{{ vl.firstname}} {{vl.lastname }}</td>
-                            <td class="text-center">{{ vl.email }}</td>
-                            <td class="text-center">{{ vl.contact }}</td>
-                            <td class="text-center">{{ vl.wappnumber }}</td>
+                        <tr
+                            *ngFor="let item of visitorList | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+                            <td class="text-center">{{ item.index }}</td>
+                            <td class="text-center">{{ item.firstname}} {{item.lastname }}</td>
+                            <td class="text-center">{{ item.email }}</td>
+                            <td class="text-center">{{ item.contact }}</td>
+                            <td class="text-center">{{ item.wappnumber }}</td>
                             <td class="text-center">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" [(ngModel)]="vl.isactive" name="list_name"
-                                            (change)="contactOrNot($event.target.checked,vl.id)" value="h1"
+                                        <input class="form-check-input" [(ngModel)]="item.isactive" name="list_name"
+                                            (change)="contactOrNot($event.target.checked,item.id)" value="h1"
                                             type="checkbox" />
                                         <span class="form-check-sign"></span>
                                     </label>
@@ -35,17 +36,25 @@
                             <td class="text-right">
                                 <button type="button" rel="tooltip" class="btn btn-info  btn-icon btn-sm">
                                     <i class="fa fa-eye" data-toggle="modal" data-target="#VisitorModal"
-                                        (click)="viewVisitorDetails(vl)"></i>
+                                        (click)="viewVisitorDetails(item)"></i>
                                 </button>
                                 &nbsp;
                                 <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
-                                    (click)="removeSubject(vl.id)">
+                                    (click)="removeSubject(item.id)">
                                     <i class="fa fa-times"></i>
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true">
+                    </pagination-controls>
+                </div>
             </div>
         </div>
     </div>

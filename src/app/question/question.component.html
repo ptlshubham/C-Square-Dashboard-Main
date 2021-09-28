@@ -472,33 +472,38 @@
                         <th class="text-center">Duration(Minutes)</th>
                       </thead>
                       <tbody>
-                        <tr *ngFor="
-                            let sq of checkedQuestionList;
-                            let i = index;
-                            let j = index
-                          ">
-                          <td class="text-center">{{ i + 1 }}</td>
-                          <td class="text-center">{{ sq.quetype }}</td>
-                          <td class="text-center" *ngIf="sq.question == 'undefined'"></td>
-                          <td class="text-center" *ngIf="sq.question != 'undefined'">{{ sq.question }}</td>
+                        <tr
+                          *ngFor="let item of checkedQuestionList | paginate: { itemsPerPage: 5, currentPage: p } ;let i = index;let j = index">
+                          <td class="text-center">{{ item.index}}</td>
+                          <td class="text-center">{{ item.quetype }}</td>
+                          <td class="text-center" *ngIf="item.question == 'undefined'"></td>
+                          <td class="text-center" *ngIf="item.question != 'undefined'">{{ item.question }}</td>
                           <td class="text-center">
                             <div class="img-container">
-                              <img *ngIf="sq.imageque != null" src="http://localhost:8090{{ sq.imageque }}"
+                              <img *ngIf="item.imageque != null" src="http://localhost:8090{{ item.imageque }}"
                                 style="height: 40% !important;width: 40% !important;" />
                             </div>
                           </td>
                           <td class="text-center">
                             <input type="text" class="form-control" name="tb-marks"
-                              (keyup)="setMarks($event.target.value, sq)" value="{{ sq.marks }}" />
+                              (keyup)="setMarks($event.target.value, item)" value="{{ item.marks }}" />
                           </td>
                           <td class="text-center">
                             <input type="text" class="form-control" name="tb-duration"
-                              (keyup)="setDuration($event.target.value, sq)" value="{{ sq.time }}" />
+                              (keyup)="setDuration($event.target.value, item)" value="{{ item.time }}" />
                           </td>
-                          <input type="hidden" name="qid" value="{{ sq.id }}" />
+                          <input type="hidden" name="qid" value="{{ item.id }}" />
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="ml-md-auto">
+                      <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true">
+                      </pagination-controls>
+                    </div>
                   </div>
                 </div>
               </div>

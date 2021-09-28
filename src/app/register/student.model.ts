@@ -29,7 +29,8 @@ export class Studentregister {
         public batchtime?: string,
         public propic?: string,
         public otp?: number,
-        public checked?: boolean
+        public checked?: boolean,
+        public index?: number
     ) {
     }
 }

@@ -24,6 +24,9 @@ export class VisitorlistComponent implements OnInit {
   getAllVisitor() {
     this.VisitorService.getAllVisitorList().subscribe((data: any) => {
       this.visitorList = data;
+      for (let i = 0; i < this.visitorList.length; i++) {
+        this.visitorList[i].index = i + 1;
+      }
     });
   }
   contactOrNot(data, id) {

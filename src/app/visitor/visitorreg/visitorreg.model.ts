@@ -29,7 +29,7 @@ export class RegisterVisitor {
         public createddate?: Date,
         public updateddate?: Date,
         public isactive?: Boolean,
-
+        public index?: number,
         public school?: string,
         public qulification?: string,
         public fatherCont?: number,
