@@ -307,13 +307,14 @@
                 </div> -->
         </div>
         <div *ngIf="selectedQue == 'MCQ'">
+          <!-- option-1 -->
           <div class="row" *ngFor="let add of addOptions; let ind = index">
-            <div class="col-md-4">
+            <div class="col-md-4" >
               <label class="col-form-label" for="question">
                 Options {{ ind + 1 }}</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="options" name="options" placeholder=" Enter option value"
-                  [(ngModel)]="add.option" />
+                <input type="text" class="form-control"  name="{{add.id}}" placeholder=" Enter option value"
+                  [(ngModel)]="add.optionlist"  />
               </div>
             </div>
             <div class="col-md-3">
@@ -326,7 +327,7 @@
               <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                 <div class="fileinput-new thumbnail">
                   <img src="./assets/img/image_placeholder.jpg" alt="..."
-                    *ngIf="add.imageoption == 'null' || add.imageoption == null" />
+                    *ngIf="add.imageoption == 'null' || add.imageoption == null " />
                   <img src="http://localhost:8090{{add.imageoption}}"
                     *ngIf="add.imageoption != 'null' || add.imageoption != null">
                 </div>
@@ -343,40 +344,42 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
               <i class="fa fa-plus-circle" aria-hidden="true" (click)="addOptionsList()"
                 style="font-size: 33px !important; margin-top: 54% !important"></i>
             </div>
-            <div class="col-md-1" *ngIf="ind > 0">
-              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeOptionsList(ind)" style="
+            <div class="col-md-1" >
+              <i class="fa fa-times-circle" aria-hidden="true" (click)="removeOptionsList(ind)" style="
                   font-size: 33px !important;
                   margin-top: 54% !important;
                   margin-left: -80px !important;
                 "></i>
-            </div>
+            </div> -->
           </div>
+      
+
         </div>
         <div *ngIf="selectedQue == 'MCQ'">
-          <div class="row" *ngFor="let add of addAnswers; let ind = index">
+          <div class="row" >
             <div class="col-md-4">
               <div class="form-group">
-                <label class="col-form-label" for="answer">Answer {{ ind + 1 }}
+                <label class="col-form-label" for="answer">Answer
                 </label>
                 <input type="text" class="form-control" id="answer" name="answer" placeholder="Enter correct answer"
-                  [(ngModel)]="add.answer" />
+                  [(ngModel)]="questionModel.answer" />
               </div>
             </div>
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
               <i class="fa fa-plus-circle" aria-hidden="true" (click)="addAnswersList()"
                 style="font-size: 33px !important; margin-top: 54% !important"></i>
             </div>
             <div class="col-md-1" *ngIf="ind > 0">
-              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeAnswersList(ind)" style="
+              <i class="fa fa-times-circle" aria-hidden="true" (click)="removeAnswersList(ind)" style="
                   font-size: 33px !important;
                   margin-top: 54% !important;
                   margin-left: -80px !important;
                 "></i>
-            </div>
+            </div> -->
           </div>
         </div>
       </form>
