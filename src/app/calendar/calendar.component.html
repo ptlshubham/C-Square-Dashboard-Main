@@ -96,20 +96,20 @@
                     </th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let ev of eventList,let i = index">
+                    <tr *ngFor="let item of eventList | paginate: { itemsPerPage: 5, currentPage: p }">
                       <td class="text-center">
-                        {{i+1}}
+                        {{item.index}}
                       </td>
                       <td class="text-center">
-                        {{ev.date}}
+                        {{item.date}}
                       </td>
                       <td class="text-center">
-                        {{ev.title}}
+                        {{item.title}}
                       </td>
                       <td class="text-right">
 
                         <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
-                          (click)="deleteEventList(ev.id)">
+                          (click)="deleteEventList(item.id)">
                           <i class="fa fa-trash"></i>
                         </button>
                       </td>
@@ -119,9 +119,11 @@
               </div>
             </div>
             <div class="card-footer ">
-              <hr>
-              <div class="stats">
-                <i class="fa fa-refresh spin"></i> Updated 3 minutes ago
+              <div class="row">
+                <div class="ml-md-auto">
+                  <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true">
+                  </pagination-controls>
+                </div>
               </div>
             </div>
           </div>

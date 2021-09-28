@@ -6,7 +6,8 @@ export class Std {
         public createddate?: Date,
         public updateddate?: Date,
         public isactive?: boolean,
-        public subjectList?: any[]
+        public subjectList?: any[],
+        public index?: number
 
     ) {
     }

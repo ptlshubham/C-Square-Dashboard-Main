@@ -76,6 +76,9 @@ export class CalendarComponent implements OnInit {
 
       this.calendarOptions.events = data;
       this.eventList = data;
+      for (let i = 0; i < this.eventList.length; i++) {
+        this.eventList[i].index = i + 1;
+      }
 
 
 

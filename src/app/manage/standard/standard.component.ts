@@ -29,24 +29,7 @@ export class StandardComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  ngAfterContentInit() {
-    $('#datatable').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [5, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records",
-      }
 
-    });
-
-    var table = $('#datatable').DataTable();
-
-  }
 
   addStdList() {
     this.StdModel.isactive = true;
@@ -58,11 +41,9 @@ export class StandardComponent implements OnInit {
   getStdList() {
     this.manageService.getStdList().subscribe((data: any) => {
       this.STD = data;
-      this.standardTable = {
-        headerRow: ['#', 'Standard Name', 'Actions'],
-        footerRow: ['#', 'Standard Name', 'Actions'],
-        dataRows: this.STD
-      };
+      for (let i = 0; i < this.STD.length; i++) {
+        this.STD[i].index = i + 1;
+      }
     });
   }
   removeStandard(id) {
@@ -74,12 +55,5 @@ export class StandardComponent implements OnInit {
   }
   editStandard(data) {
     this.editStd = data;
-  }
-  updateStandard(data) {
-
-    // this.manageService.updateStandardList(data).subscribe((req) => {
-    //   this.getStdList();
-    // })
-
   }
 }

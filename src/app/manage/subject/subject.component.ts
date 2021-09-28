@@ -45,43 +45,7 @@ export class SubjectComponent implements OnInit {
     this.val++;
 
   }
-  ngAfterViewInit() {
-    $('#datatable').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records",
-      }
 
-    });
-
-    var table = $('#datatable').DataTable();
-
-    // Edit record
-    // table.on('click', '.edit', function () {
-    //   let $tr = $(this).closest('tr');
-
-    //   var data = table.row($tr).data();
-    //   alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-    // });
-
-    // Delete a record
-    // table.on('click', '.remove', function (e) {
-    //   let $tr = $(this).closest('tr');
-    //   table.row($tr).remove().draw();
-    //   e.preventDefault();
-    // });
-
-    //Like record
-    table.on('click', '.like', function () {
-      alert('You clicked on Like button');
-    });
-  }
   addSubjectList() {
     this.val++;
     this.addSubjects.push({ name: this.val });
@@ -120,12 +84,9 @@ export class SubjectComponent implements OnInit {
   getSubject(id) {
     this.manageService.getSubjectList(id).subscribe((data: any) => {
       this.subjects = data;
-      this.dataTable = {
-        headerRow: ['#', 'Standard', 'Subject', 'Actions'],
-        footerRow: ['#', 'Standard', 'Subject', 'Actions'],
-        dataRows: this.subjects
-
-      };
+      for (let i = 0; i < this.subjects.length; i++) {
+        this.subjects[i].index = i + 1;
+      }
     });
   }
   editSubject(data) {

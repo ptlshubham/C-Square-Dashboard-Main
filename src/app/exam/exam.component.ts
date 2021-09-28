@@ -247,17 +247,17 @@ export class ExamComponent implements OnInit {
   getTestList() {
     this.examService.getTest(this.selectedSubId).subscribe((data: any) => {
       this.TestList = data;
-      this.testTable = {
-        headerRow: ['#', 'Test Name', 'Total Marks', 'Total Duration', 'Created Date', 'Test Date', 'Actions'],
-        footerRow: ['#', 'Test Name', 'Total Marks', 'Total Duration', 'Created Date', 'Test Date', 'Actions'],
-        dataRows: this.TestList
-      };
-
+      for (let i = 0; i < this.TestList.length; i++) {
+        this.TestList[i].index = i + 1;
+      }
     });
   }
   ViewTestQue(val) {
     this.examService.getViewTest(val.id).subscribe((data: any) => {
       this.queList = data;
+      for (let i = 0; i < this.queList.length; i++) {
+        this.queList[i].index = i + 1;
+      }
       this.questionModel = val;
       this.questionModel.totalque = data.length;
       this.questionModel.subname = this.selectedSubject;

@@ -5,8 +5,9 @@ export class Subject {
         public stdid?: number,
         public subject?: string,
         public isactive?: boolean,
-        public question?:[],
-        public color?:string
+        public question?: [],
+        public color?: string,
+        public index?: number
 
     ) {
     }

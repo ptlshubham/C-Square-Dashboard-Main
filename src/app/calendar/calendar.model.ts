@@ -8,7 +8,8 @@ export class CalendarEvents {
         public active?: boolean,
         public createddate?: Date,
         public updateddate?: Date,
-        public color?: string
+        public color?: string,
+        public index?: number
 
 
     ) {

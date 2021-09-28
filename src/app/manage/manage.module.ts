@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SubjectComponent } from './subject/subject.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -15,6 +16,7 @@ import { SubjectComponent } from './subject/subject.component';
     CommonModule,
     HttpClientModule,
     FormsModule,
+    NgxPaginationModule,
 
     RouterModule.forChild(ManageRoutes),
   ]
