@@ -51,8 +51,8 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped" cellspacing="0" width="100%">
-                    <thead>
+                <table class="table">
+                    <thead class="text-primary">
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Standard Name</th>
@@ -65,7 +65,8 @@
                             <td class="text-center">{{ item.stdname }}</td>
                             <td class="text-right">
                                 <a class="btn btn-warning btn-link btn-icon btn-sm edit">
-                                    <i class="fa far fa-eye" (click)="editStandard(item)"></i>
+                                    <i class="fa far fa-eye" data-toggle="modal" data-target="#standardModal"
+                                        (click)="editStandard(item)"></i>
                                 </a>
                                 <a class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
                                         (click)="removeStandard(item.id)"></i></a>

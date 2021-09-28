@@ -16,38 +16,38 @@
       </div>
     </div>
     <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="text-primary">
+            <tr>
+              <th class="text-center">#</th>
+              <th class="text-center">Name</th>
+              <th class="text-center">Qualification</th>
+              <th class="text-center">Email</th>
+              <th class="text-center">Contact</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of reg | paginate: { itemsPerPage: 5, currentPage: p }">
+              <td class="text-center">{{item.index}}</td>
+              <td class="text-center">{{ item.firstname }} {{ item.lastname }}</td>
+              <td class="text-center">{{ item.qualification }}</td>
+              <td class="text-center">{{ item.email }}</td>
+              <td class="text-center">{{ item.contact }}</td>
+              <td class="text-right">
+                <a class="btn btn-warning btn-link btn-icon btn-sm edit">
+                  <i class="fa far fa-eye" data-toggle="modal" data-target="#teacherModal"
+                    (click)="editTeacherData(item)"></i>
+                </a>
+                <a class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
+                    (click)="removeTeacher(item.id)"></i></a>
+              </td>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Name</th>
-            <th class="text-center">Qualification</th>
-            <th class="text-center">Email</th>
-            <th class="text-center">Contact</th>
-            <th class="text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of reg | paginate: { itemsPerPage: 5, currentPage: p }">
-            <td class="text-center">{{item.index}}</td>
-            <td class="text-center">{{ item.firstname }} {{ item.lastname }}</td>
-            <td class="text-center">{{ item.qualification }}</td>
-            <td class="text-center">{{ item.email }}</td>
-            <td class="text-center">{{ item.contact }}</td>
-            <td class="text-right">
-              <a class="btn btn-warning btn-link btn-icon btn-sm edit">
-                <i class="fa far fa-eye" data-toggle="modal" data-target="#teacherModal"
-                  (click)="editTeacherData(item)"></i>
-              </a>
-              <a class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
-                  (click)="removeTeacher(item.id)"></i></a>
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
-
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="card-footer">
       <div class="row">
@@ -816,8 +816,8 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-striped" cellspacing="0" width="100%">
-        <thead>
+      <table class="table table-striped">
+        <thead class="text-primary">
           <tr>
             <th class="text-center">#</th>
             <th class="text-center">Name</th>
@@ -1136,11 +1136,9 @@
       </div>
     </div>
     <div class="card-body">
-      <div class="toolbar">
-        <!--        Here you can write extra buttons/actions for the toolbar              -->
-      </div>
+
       <table class="table table-striped ">
-        <thead>
+        <thead class="text-primary">
           <tr>
             <th class="text-center">#</th>
             <th class="text-center">Student Profile</th>
