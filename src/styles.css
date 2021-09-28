@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* .navbar .navbar-collapse .nav-item .nav-link,
+.login-page .navbar .navbar-collapse .nav-item .nav-link,
+.lock-page .navbar .navbar-collapse .nav-item .nav-link:hover {
+    color: black !important;
+} */
+
+.register-page,
+.login-page,
+.lock-page .navbar .navbar-collapse .nav-item .nav-link {
+    text-transform: capitalize;
+    color: red !important;
+}
+
+.test {
+    color: blue !important;
+    background-color: aqua !important;
+}

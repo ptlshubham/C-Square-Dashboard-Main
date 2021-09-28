@@ -1,0 +1,424 @@
+<div class="main-content">
+  <div class="row" *ngIf="role == 'Student'">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-md-12">
+              <div class=" page-carousel">
+                <ngb-carousel>
+                  <ng-template ngbSlide *ngFor="let b of topban">
+                    <img src="http://localhost:8090{{b.bannersimage}}" style="height:40%;width:100%;"
+                      alt="Random first slide">
+                    <div class="carousel-caption">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Teacher'">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-danger">
+                <i class="fa fa-graduation-cap text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Student</p>
+                <p class="card-title">Total Students: {{studentsList.length}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer " (click)="openStudent()">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Admin'">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fas fa-chalkboard-teacher text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Teacher</p>
+                <p class="card-title">Total Teachers: {{reg.length}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer" (click)="openTeacher()">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Admin'">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-graduation-cap text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Student</p>
+                <p class="card-title">Total Students: {{studentsList.length}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer " (click)="openStudent()">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role != 'Student'">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-globe text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Test</p>
+                <p class="card-title">Total Test: {{Test.length}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer" routerLink='/exam'>
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right" routerLink='/exam'></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Student' && ActiveTest.length>=1">
+      <div class="card card-stats" style="background-color: #eb8642 !important;" (click)="openPendingTest()">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-clock-o" style="color: white!important;"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers" style="color: white!important;">
+                <p class="card-title">Pending Test: {{ActiveTest.length}}
+                <p class="card-category" style="color: white!important;">Pending Test</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr>
+          <div class="stats" style="color: white!important;">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Student'">
+      <div class="card card-stats" (click)="openPendingTest()">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-exclamation-triangle text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-title">Not Attempted: 0
+                <p class="card-category">Not Attempted</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6" *ngIf="role == 'Student'">
+      <div class="card card-stats" (click)="openSubmittedTest()">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-check text-success"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-title">Completed Test</p>
+                <p class="card-category">Total: {{submitedTest.length}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> View
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="showSubmited">
+    <div class="row" *ngIf="role == 'Student' ">
+      <div class="col-lg-2 col-md-6 col-sm-6" *ngFor="let s of submitedTest; let i = index">
+        <div class="card card-stats" (click)="openShowTestList()" [style.box-shadow]="s.color">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="numbers">
+                  <p class="card-title" style="
+                          font-size: 22px !important;
+                          text-align: justify;
+                          font-weight: 600;
+                        ">
+                    {{s.testname}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <hr />
+            <div class="stats">Total Marks:{{s.totalmarks}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div *ngIf="showSubmited">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-3">
+            <h4 class="card-title">Test List</h4>
+          </div>
+          <div class="col-md-2">
+            <label for="subject"
+              style="color: black; font-size:18px !important;font-weight:500; margin-top: 13px !important; margin-left:34% !important;">Select
+              Subject:</label>
+          </div>
+          <div class="col-md-3">
+            <div class="dropdown form-group">
+              <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button"
+                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                {{selectedSub}}
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-header">Select Standard</div>
+                <div *ngFor="let s of subjects">
+                  <a class="dropdown-item" (click)="selectSUBList(s.id)">{{s.subject}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-md-auto">
+            <button type="cancel" class="btn btn-danger btn-round" (click)="closeTest()">
+              <i class="fa fa-arrow-left"></i> Back
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="text-primary">
+              <th class="text-center">#</th>
+              <th class="text-center">Student</th>
+              <th class="text-center">Testname</th>
+              <th class="text-center">Total Marks</th>
+              <th class="text-center">Get Marks</th>
+              <th class="text-right">Actions</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of dispTest; let i = index">
+                <td class="text-center">{{ i + 1 }}</td>
+                <td class="text-center">{{ t.studentid}}</td>
+                <td class="text-center">{{ t.testname }}</td>
+                <td class="text-center">{{ t.totalmarks }}</td>
+                <td class="text-center">{{ t.marks }}</td>
+                <td class="text-right">
+
+                  <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                    <i class="fa far fa-eye" (click)="getTestList(t)"></i>
+                  </button>
+                  &nbsp;
+                  <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                    (click)="removeTeacher(t.id)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row" *ngIf="role != 'Student'">
+    <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let s of stdlist;let i=index">
+      <div class="card card-stats" (click)="openStd(s.id)">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fas fa-school"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-title">{{s.stdname}}</p>
+                <p class="card-category">Subject: {{s.subjectList.length}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-arrow-right"></i> Update Now
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="role =='Admin'">
+    <div class="col-md-4">
+      <div class="card ">
+        <div class="card-header ">
+          <h5 class="card-title">Email Statistics</h5>
+          <p class="card-category">Last Campaign Performance</p>
+        </div>
+        <div class="card-body ">
+          <canvas baseChart [data]="doughnutChartData" [dataset]="doughnutChartDatasets" [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType" [options]="doughnutChartOptions">
+          </canvas>
+        </div>
+        <div class="card-footer ">
+          <div class="legend">
+            <i class="fa fa-circle text-info"></i> Open
+          </div>
+          <hr>
+          <div class="stats">
+            <i class="fa fa-calendar"></i> Number of emails sent
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card ">
+        <div class="card-header ">
+          <h5 class="card-title">New Visitators</h5>
+          <p class="card-category">Out Of Total Number</p>
+        </div>
+        <div class="card-body ">
+          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+            [options]="doughnutChartOptions">
+          </canvas>
+        </div>
+        <div class="card-footer ">
+          <div class="legend">
+            <i class="fa fa-circle text-warning"></i> Visited
+          </div>
+          <hr>
+          <div class="stats">
+            <i class="fa fa-check"></i> Campaign sent 2 days ago
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card ">
+        <div class="card-header ">
+          <h5 class="card-title">Orders</h5>
+          <p class="card-category">Total number</p>
+        </div>
+        <div class="card-body ">
+          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+            [options]="doughnutChartOptions" [dataset]="doughnutChartDatasets">
+          </canvas>
+        </div>
+        <div class="card-footer ">
+          <div class="legend">
+            <i class="fa fa-circle text-danger"></i> Completed
+          </div>
+          <hr>
+          <div class="stats">
+            <i class="fa fa-clock-o"></i> Updated 3 minutes ago
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card ">
+        <div class="card-header ">
+          <h5 class="card-title">Email Statistics</h5>
+          <p class="card-category">Last Campaign Performance</p>
+        </div>
+        <div class="card-body ">
+          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+          </canvas>
+        </div>
+        <div class="card-footer ">
+          <div class="legend">
+            <i class="fa fa-circle text-info"></i> Open
+          </div>
+          <hr>
+          <div class="stats">
+            <i class="fa fa-calendar"></i> Number of emails sent
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="main-content">
+    <div class="card" *ngIf="clickTest">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4 class="card-title">Select Subject</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToRegister()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="clickTest">
+        <div class="col-lg-2 col-md-6 col-sm-6" *ngFor="let s of subjects; let i = index">
+            <div class="card card-stats" (click)="openTestList(s)" [style.box-shadow]="s.color">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="numbers">
+                                <p class="card-title" style="
+                        font-size: 22px !important;
+                        text-align: justify;
+                        font-weight: 600;
+                      ">
+                                    {{ s.subject }}
+                                </p>
+                                <!-- <p class="card-category">Subject: {{disptest.length}} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr />
+                    <div class="stats">Total Test: {{disptest.length}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="clickViewTest">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4 class="card-title">Test List</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backTosubject()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>{{ testTable.headerRow[0] }}</th>
+                        <th>{{ testTable.headerRow[1] }}</th>
+                        <th>{{ testTable.headerRow[2] }}</th>
+                        <th>{{ testTable.headerRow[3] }}</th>
+                        <th>{{ testTable.headerRow[4] }}</th>
+                        <th>{{ testTable.headerRow[5] }}</th>
+                        <th class="disabled-sorting text-right">{{ testTable.headerRow[6] }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of testTable.dataRows;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{ row.studentid }}</td>
+                        <td>{{ row.testname }}</td>
+                        <td>{{ row.totalmarks }}</td>
+                        <td *ngIf="t.marks != undefined">{{ row.marks}}</td>
+                        <td *ngIf="t.marks == undefined">-</td>
+                        <td *ngIf="t.status != null">{{row.status}}</td>
+                        <td *ngIf="t.status == null">unchecked</td>
+                        <td class="text-right">
+                            <a class="btn btn-warning btn-link btn-icon btn-sm edit">
+                                <i class="fa far fa-eye" data-toggle="modal" data-target="#testModal"
+                                    (click)="getTestList(row)"></i>
+                            </a>
+                            <a class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
+                                    (click)="removeTeacher(row.id)"></i></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="viewTest">
+        <div class="card card-plain">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 class="card-title">Test Details</h4>
+                    </div>
+                    <div class="ml-md-auto">
+                        <button type="cancel" class="btn btn-danger btn-round" (click)="cancelTest()">
+                            <i class="fa fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <label class="dynamicLabel" for="testname">Test Name</label>
+                                <input type="text" [ngModel]="testName" disabled class="form-control" name="testname" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <label class="dynamicLabel" for="testname">Standard</label>
+                                <input type="text" [ngModel]="selectedStd" disabled class="form-control"
+                                    name="selectedStd" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <label class="dynamicLabel" for="testname">Subject</label>
+                                <input type="text" [ngModel]="selectedSub" disabled class="form-control"
+                                    name="testname" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 class="card-title">Check Answer</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Questions type</th>
+                            <th class="text-center">Questions</th>
+                            <th class="text-center">Questions Image</th>
+                            <th class="text-center">Total Marks</th>
+                            <th class="text-center">Answer</th>
+                            <th class="text-center">Obtain Marks</th>
+                            <th class="text-center">Remarks</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let sq of questions;let i = index;let j = index">
+                                <td class="text-center">{{ i + 1 }}</td>
+                                <td>{{ sq.quetype }}</td>
+                                <td class="text-center" *ngIf="sq.question == 'undefined'"></td>
+                                <td class="text-center" *ngIf="sq.question != 'undefined'">{{ sq.question }}</td>
+                                <td>
+                                    <div class="img-container">
+                                        <img *ngIf="sq.imageque != null" src="http://localhost:8090{{ sq.imageque }}" />
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    {{ sq.marks }}
+                                </td>
+                                <td class="text-center">
+                                    <textarea type="text" class="md-textarea form-control" name="tb-duration"
+                                        [ngModel]="sq.answer" name="answer"></textarea>
+                                </td>
+                                <td class="text-center">
+                                    <input type="number" class="form-control" name="tb-duration"
+                                        [(ngModel)]="sq.obtainmarks" name="sq.obtainmarks" value="{{sq.obtainmarks}}" />
+                                </td>
+                                <td class="text-center">
+                                    <input type="text" class="form-control" name="tb-duration" [(ngModel)]="sq.remark"
+                                        name="sq.remark" value="{{sq.remark}}" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="ml-md-auto">
+                        <button type="submit" class="btn btn-info btn-round" (click)="submitTestChecking()">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

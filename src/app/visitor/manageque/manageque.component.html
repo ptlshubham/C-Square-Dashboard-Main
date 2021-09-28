@@ -1,0 +1,598 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats" (click)="openQuestionnaireBox()">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-question text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-title">Add Questionnaire</p>
+                                <p class="card-category">Total:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats" (click)="openTestBox()">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-check text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-title">View Test List</p>
+                                <p class="card-category">Total:
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-arrow-right"></i> View
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="openQuestionnaire">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Manage Question For Visitor</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="closeQuestion()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                    <!-- <button type="submit" class="btn btn-info btn-round" routerLink="/manage/std">Add Standard</button> -->
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Select Standard</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn-round btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ selectedstd }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Standard</div>
+                            <div *ngFor="let std of stdlist">
+                                <a class="dropdown-item" (click)="selectStdList(std.id)">{{
+                                    std.stdname
+                                    }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" *ngIf="issubjectlist">
+        <div class="col-lg-2 col-md-6 col-sm-6" *ngFor="let s of subjects; let i = index">
+            <div class="card card-stats" (click)="openQuestionList(s)" [style.box-shadow]="s.color">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="numbers">
+                                <p class="card-title" style="
+                                        font-size: 22px !important;
+                                        text-align: justify;
+                                        font-weight: 600;
+                                      ">
+                                    {{ s.subject }}
+                                </p>
+                                <!-- <p class="card-category">Subject: {{s.subjectList.length}} -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <hr />
+                    <div class="stats">Total Questions: {{ s.question.length }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="questionList">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Manage Questionnaire</h4>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-success btn-round" data-toggle="modal" data-target="#testModal"
+                        *ngIf="isMasterSel" (click)="addTest()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Test
+                    </button>
+                    <button type="submit" class="btn btn-info btn-round" (click)="openQuestionBox()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Question
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-left">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" [(ngModel)]="isMasterSel" name="list_name"
+                                        value="h1" (change)="checkUncheckAll()" type="checkbox" />
+                                    <span class="form-check-sign"></span>
+                                </label>
+                            </div>
+                        </th>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Questions</th>
+                        <th class="text-center">Marks</th>
+                        <th class="text-center">Time Duration</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let q of que; let i = index">
+                            <td>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" [(ngModel)]="q.isactive" name="list_name"
+                                            value="{{ q.id }}" (change)="isAllSelected()" type="checkbox" />
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td class="text-center">{{ q.question }}</td>
+                            <td class="text-center">{{ q.marks }} Marks</td>
+                            <td class="text-center">{{ q.time }} Minute</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                    <i class="fa far fa-edit" (click)="editQuestion(q)"></i>
+                                </button>
+                                &nbsp;
+                                <button type="button" rel="tooltip" (click)="removeQuestion(q.id)"
+                                    class="btn btn-danger btn-icon btn-sm">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="addQuestion">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="card-title">Add New Question</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" name="questionRegForm" #questionRegForm="ngForm">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-form-label" for="question">Question</label>
+                            <br />
+                            <textarea class="form-control" id="question" rows="3" name="question"
+                                placeholder="Enter a question here" [(ngModel)]="questionModel.question"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-form-label" for="answer">Marks</label>
+                            <input type="text" class="form-control" id="marks" name="marks" placeholder="Enter Marks"
+                                [(ngModel)]="questionModel.marks" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-form-label" for="duration">Time Duration</label>
+                            <input type="text" class="form-control" id="duration" name="duration"
+                                placeholder="Enter Time Duration" [(ngModel)]="questionModel.time" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngFor="let add of addOptions; let ind = index">
+                    <div class="col-md-4">
+                        <label class="col-form-label" for="question">
+                            Options {{ ind + 1 }}</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="options" name="options"
+                                placeholder=" Enter option value" [(ngModel)]="add.option" />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true" (click)="addOptionsList()"
+                            style="font-size: 33px !important; margin-top: 54% !important"></i>
+                    </div>
+                    <div class="col-md-1" *ngIf="ind > 0">
+                        <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeOptionsList(ind)" style="
+                      font-size: 33px !important;
+                      margin-top: 54% !important;
+                      margin-left: -80px !important;
+                    "></i>
+                    </div>
+                </div>
+                <div class="row" *ngFor="let add of addAnswers; let ind = index">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-form-label" for="answer">Answer {{ ind + 1 }}
+                            </label>
+                            <input type="text" class="form-control" id="answer" name="answer"
+                                placeholder="Enter correct answer" [(ngModel)]="add.answer" />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <i class="fa fa-plus-circle" aria-hidden="true" (click)="addAnswersList()"
+                            style="font-size: 33px !important; margin-top: 54% !important"></i>
+                    </div>
+                    <div class="col-md-1" *ngIf="ind > 0">
+                        <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeAnswersList(ind)" style="
+                      font-size: 33px !important;
+                      margin-top: 54% !important;
+                      margin-left: -80px !important;
+                    "></i>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <button type="submit" class="btn btn-round" (click)="closeQue()">
+                        Cancel
+                    </button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-info btn-round" *ngIf="submitButton"
+                        [disabled]="!questionRegForm.form.valid" (click)="saveNewQuestion(questionModel)">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+                    </button>
+                    <button type="submit" class="btn btn-info btn-round" *ngIf="updateButton"
+                        (click)="updateQuestion(questionModel)">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Create Test / Quiz</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-vertical" #quizform="ngForm">
+                            <div class="form-group row">
+                                <label for="testname" class="col-sm-2 col-form-label">Test Name:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" [ngModel]="testName" class="form-control" name="testname"
+                                        value="{{ testName }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="standard" class="col-sm-2 col-form-label">Standard:
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" [ngModel]="selectedstd" readonly class="form-control"
+                                        name="standard" value="" />
+                                    <input type="hidden" [ngModel]="standardId" readonly class="form-control"
+                                        name="standardId" value="" />
+                                </div>
+                                <label for="subject" class="col-sm-2 col-form-label">Subject:
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" [ngModel]="subjectName" readonly class="form-control"
+                                        name="subject" value="" />
+                                    <input type="hidden" [ngModel]="subjectId" readonly class="form-control"
+                                        name="subjectId" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="totalquestion" class="col-sm-2 col-form-label">Total Questions:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" [ngModel]="totalQuestions" readonly
+                                        class="form-control-plaintext" name="totalquestion"
+                                        value="{{ totalQuestions }}" />
+                                </div>
+                                <label for="totalmarks" class="col-sm-2 col-form-label">Total Marks:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" [ngModel]="totalMarks" readonly class="form-control-plaintext"
+                                        name="totalmarks" value="{{ totalMarks }}" />
+                                </div>
+                                <label for="totalduration" class="col-sm-2 col-form-label">Duration:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" [ngModel]="duration" readonly class="form-control-plaintext"
+                                        name="totalduration" value="{{ duration }}" />
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table ng-if="checkedQuestionList.length > 0" class="table">
+                                            <thead class="text-primary">
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Questions</th>
+                                                <th class="text-center">Marks</th>
+                                                <th class="text-center">Duration(Minutes)</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let sq of checkedQuestionList;let i = index;let j = index">
+                                                    <td class="text-center">{{ i + 1 }}</td>
+                                                    <td>{{ sq.question }}</td>
+
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control" name="tb-marks"
+                                                            (keyup)="setMarks($event.target.value, sq)"
+                                                            value="{{ sq.marks }}" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control" name="tb-duration"
+                                                            (keyup)="setDuration($event.target.value, sq)"
+                                                            value="{{ sq.time }}" />
+                                                    </td>
+                                                    <input type="hidden" name="qid" value="{{ sq.id }}" />
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-round" data-dismiss="modal"
+                                    (click)="createTest(quizform.value)">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Create
+                                </button>
+                                <button type="button " class="btn btn-secondary btn-round" data-dismiss="modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="viewTestFlag">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-2">
+                    <h4 class="card-title">Test List</h4>
+                </div>
+                <div class="col-md-2">
+                    <label for="subject"
+                        style="color: black; font-size:18px !important;font-weight:500; margin-top: 13px !important; margin-left:34% !important;">Select
+                        Standard:</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn-round btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ selectedStd }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Standard</div>
+                            <div *ngFor="let std of stdlist">
+                                <a class="dropdown-item" (click)="selectStdVisitor(std.id)">{{
+                                    std.stdname
+                                    }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="subject"
+                        style="color: black; font-size:18px !important;font-weight:500; margin-top: 13px !important; margin-left:34% !important;">Select
+                        Subject:</label>
+                </div>
+                <div class="col-md-2">
+                    <div class="dropdown form-group">
+                        <button class="dropdown-toggle btn btn-round btn-block" type="button" name="dropdownMenuButton"
+                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ selectedSubject }}
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-header">Select Subject</div>
+                            <div *ngFor="let sub of subjects">
+                                <a class="dropdown-item" (click)="selectSubjectList(sub.id)">{{
+                                    sub.subject
+                                    }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ml-md-auto">
+                    <button type="cancel" class="btn btn-danger btn-round" (click)="backToHome()">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Test Name</th>
+                        <th class="text-center">Total Marks</th>
+                        <th class="text-center">Total Duration</th>
+                        <th class="text-center">Created Date</th>
+                        <th class="text-center">Test Date</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tl of visitorTestList; let i = index">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td class="text-center">{{ tl.testname }}</td>
+                            <td class="text-center">{{ tl.totalmarks }}</td>
+                            <td class="text-center">{{ tl.totalminute }}</td>
+                            <td class="text-center">{{ tl.createdate | date }}</td>
+                            <td class="text-center">{{ tl.updateddate | date }}</td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#testVisitorModal"
+                                        (click)="ViewVisitorTestQue(tl)"></i>
+                                </button>
+                                <!-- &nbsp;
+                                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                                    <i class="fa far fa-edit" data-toggle="modal" data-target="#noticeModal"
+                                        (click)="editSubject(s)"></i>
+                                </button> -->
+                                &nbsp;
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeSubject(s.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="testVisitorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Create Test / Quiz</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-vertical" #quizform="ngForm">
+                            <div class="form-group row">
+                                <label for="testname" class="col-sm-2 col-form-label">Test Name:
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" disabled [(ngModel)]="questionModel.testname"
+                                        class="form-control" name="testname" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="standard" class="col-sm-2 col-form-label">Standard:
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" disabled [(ngModel)]="selectedstd" readonly class="form-control"
+                                        name="selectedstd" value="" />
+                                    <!-- <input type="hidden" [ngModel]="standardId" readonly class="form-control" name="standardId" value=""> -->
+                                </div>
+                                <label for="subject" class="col-sm-2 col-form-label">Subject:
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" disabled [(ngModel)]="selectedSubject" readonly
+                                        class="form-control" name="selectedSubject" value="" />
+                                    <!-- <input type="hidden" [ngModel]="subjectId" readonly class="form-control" name="subjectId" value=""> -->
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="totalquestion" class="col-sm-2 col-form-label">Total Questions:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" disabled [(ngModel)]="questionModel.totalque" readonly
+                                        class="form-control-plaintext" name="totalque" value="" />
+                                </div>
+                                <label for="totalmarks" class="col-sm-2 col-form-label">Total Marks:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" disabled [(ngModel)]="questionModel.totalmarks" readonly
+                                        class="form-control-plaintext" name="totalmarks" value="" />
+                                </div>
+                                <label for="totalduration" class="col-sm-2 col-form-label">Duration:
+                                </label>
+                                <div class="col-sm-2">
+                                    <input type="text" disabled [(ngModel)]="questionModel.totalminute" readonly
+                                        class="form-control-plaintext" name="totalminute" value="" />
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="text-primary">
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Questions type</th>
+                                                <th class="text-center">Questions</th>
+                                                <th class="text-center">Marks</th>
+                                                <th class="text-center">Duration(Minutes)</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let sq of queList; let i = index">
+                                                    <td class="text-center">{{ i + 1 }}</td>
+                                                    <td>{{ sq.quetype }}</td>
+                                                    <td>{{ sq.question }}</td>
+                                                    <td class="text-center">
+                                                        {{ sq.marks }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ sq.time }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button *ngIf="questionModel.activetest == 1" type="submit"
+                                    class="btn btn-success btn-round" data-dismiss="modal"
+                                    (click)="SendLinkToStudent(questionModel.id)">
+                                    <i class="fa fa-link" aria-hidden="true"></i> Already Sent
+                                    Link
+                                </button>
+                                <button *ngIf="questionModel.activetest == 0" type="submit"
+                                    class="btn btn-primary btn-round" data-dismiss="modal"
+                                    (click)="SendLinkToStudent(questionModel.id)">
+                                    <i class="fa fa-link" aria-hidden="true"></i> Send Link
+                                </button>
+                                <button type="button " class="btn btn-secondary btn-round" data-dismiss="modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

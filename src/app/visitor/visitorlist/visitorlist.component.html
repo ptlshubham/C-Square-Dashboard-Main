@@ -1,0 +1,163 @@
+<div class="main-content">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Visitor List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Contact</th>
+                        <th class="text-center">WhatsApp Number</th>
+                        <th class="text-center">Contact or Not</th>
+                        <th class="text-right">Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let vl of visitorList; let i = index">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td class="text-center">{{ vl.firstname}} {{vl.lastname }}</td>
+                            <td class="text-center">{{ vl.email }}</td>
+                            <td class="text-center">{{ vl.contact }}</td>
+                            <td class="text-center">{{ vl.wappnumber }}</td>
+                            <td class="text-center">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" [(ngModel)]="vl.isactive" name="list_name"
+                                            (change)="contactOrNot($event.target.checked,vl.id)" value="h1"
+                                            type="checkbox" />
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <button type="button" rel="tooltip" class="btn btn-info  btn-icon btn-sm">
+                                    <i class="fa fa-eye" data-toggle="modal" data-target="#VisitorModal"
+                                        (click)="viewVisitorDetails(vl)"></i>
+                                </button>
+                                &nbsp;
+                                <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm"
+                                    (click)="removeSubject(vl.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="VisitorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-notice">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="nc-icon nc-simple-remove"></i>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel">Visitor Details</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="instruction">
+                        <form class="form-vertical" #quizform="ngForm">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" disabled id="firstname" name="firstname"
+                                        [(ngModel)]="visitorModel.firstname" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Middle Name</label>
+                                    <input type="text" class="form-control" disabled id="middlename" name="middlename"
+                                        [(ngModel)]="visitorModel.middlename" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" disabled id="lastname" name="lastname"
+                                        [(ngModel)]="visitorModel.lastname" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Contact Number</label>
+                                    <input type="text" class="form-control" disabled id="contact"
+                                        [(ngModel)]="visitorModel.contact" name="contact" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>WhatsApp Number</label>
+                                    <input type="number" class="form-control" disabled id="fname"
+                                        [(ngModel)]="visitorModel.wappnumber" name="wapp" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" disabled id="email"
+                                        [(ngModel)]="visitorModel.email" name="email" #fname="ngModel" />
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label>Gender</label>
+                                    <input type="gender" class="form-control" disabled id="gender"
+                                        [(ngModel)]="visitorModel.gender" name="gender" #fname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Father Contact Number</label>
+                                    <input type="text" class="form-control" disabled id="parents"
+                                        [(ngModel)]="visitorModel.fatherCont" name="parents" #parents="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Mother Name</label>
+                                    <input type="text" class="form-control" disabled id="mname"
+                                        [(ngModel)]="visitorModel.mothername" name="mname" #mname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Mother Number</label>
+                                    <input type="number" class="form-control" disabled id="mnumber"
+                                        [(ngModel)]="visitorModel.motherCont" name="mnumber" #mnumber="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>School Name</label>
+                                    <input type="text" class="form-control" disabled id="schoolname"
+                                        [(ngModel)]="visitorModel.school" name="schoolname" #schoolname="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Last Qualification</label>
+                                    <input type="text" class="form-control" disabled id="lastqulification"
+                                        [(ngModel)]="visitorModel.qulification" name="lastqulification"
+                                        #lastqulification="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Percentage (%)</label>
+                                    <input type="text" class="form-control" disabled id="percentage"
+                                        [(ngModel)]="visitorModel.percentage" name="percentage" #percentage="ngModel" />
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Address</label>
+                                    <textarea type="text" class="form-control" disabled id="address" name="address"
+                                        rows="3" cols="30" [(ngModel)]="visitorModel.address"
+                                        #address="ngModel"></textarea>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" disabled id="city"
+                                        [(ngModel)]="visitorModel.city" name="city" #city="ngModel" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Pincode</label>
+                                    <input type="text" class="form-control" disabled id="pincode"
+                                        [(ngModel)]="visitorModel.pincode" name="pincode" #pincode="ngModel" />
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button " class="btn btn-secondary btn-round" data-dismiss="modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Close
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

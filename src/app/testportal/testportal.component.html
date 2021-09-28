@@ -1,0 +1,191 @@
+<div class="main-content">
+  <div class="row" *ngIf="!testInfoBoxFlag && !ruleBoxFlag && !questionBoxFlag">
+    <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let s of studentTestList; let i = index">
+      <div class="card card-stats" (click)="openStdTest(s.id)">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="fa fa-university"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-title">{{ s.testname }}</p>
+                <p class="card-category">Marks: {{ s.totalmarks }}</p>
+                <p class="card-category">Minute: {{ s.totalminute }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer" (click)="studentTest(s)">
+          <hr />
+          <div class="stats"><i class="fa fa-arrow-right"></i> Start Test</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="testInfoBoxFlag" class="row">
+    <div class="col col-sm-12">
+      <div class="card text-center">
+        <div class="card-header">
+          <div class="row">
+            <div class="ml-md-auto">
+              <button type="cancel" class="btn btn-danger btn-round" (click)="backPendingTest()">
+                <i class="fa fa-arrow-left"></i> Back
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2>Exam Information</h2>
+          <h5 class="card-title">
+            Subject:
+            <span class="badge badge-danger">{{ testModel.subject }}</span>
+          </h5>
+          <h5 class="card-title">
+            Title:
+            <span class="badge badge-danger">{{ testModel.testname }}</span>
+          </h5>
+          <ul class="list-group">
+            <li class="
+                list-group-item
+                d-flex
+                justify-content-between
+                align-items-center
+              ">
+              Total Questions:{{ testModel.totalque }}
+              <h5><span class="badge badge-danger"></span></h5>
+            </li>
+            <li class="
+                list-group-item
+                d-flex
+                justify-content-between
+                align-items-center
+              ">
+              Total Marks:
+              <h5>
+                <span class="badge badge-danger">{{ testModel.marks }}</span>
+              </h5>
+            </li>
+            <li class="
+                list-group-item
+                d-flex
+                justify-content-between
+                align-items-center
+              ">
+              Total Duration:
+              <h5>
+                <span class="badge badge-danger">{{ testModel.time }}</span>
+              </h5>
+            </li>
+          </ul>
+          <button type="button" class="btn btn-primary" (click)="showRulesBox()">
+            Begin
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="ruleBoxFlag" class="row card">
+    <div class="col-md-12 mr-auto ml-auto">
+      <div class="card-body" data-color="primary">
+        <h4 class="text-center">
+          Before You Start the Exam, Here are the Rules:
+        </h4>
+        <ol type="1">
+          <li>The quiz will be of half an hour duration.</li>
+          <li>You can attempt the quiz only once.</li>
+          <li>All questions are Multiple Choice Question.</li>
+          <li>Only one choice is correct.</li>
+          <li>
+            Every question carry different of marks.Negative marking for wrong
+            answers.
+          </li>
+          <li>Try answer as quickly as you can.</li>
+          <li>
+            If you press Refresh or Go Back to previous page, there will be new
+            question for you and the question you were on will be counted as
+            attempted.
+          </li>
+          <li>
+            You will be able to see the RESULT immediately when you submit the
+            answer.
+          </li>
+          <li>Click Start Test to attempt the quiz.</li>
+          <li>
+            The time will start the moment you click the Start Test button.
+          </li>
+          <li>You can resume this quiz, if interrupted due to any reason.</li>
+          <li>
+            Click on Next button to move next question. Please note that you
+            will not be able to go back to any of the previous question after
+            clicking Next button.
+          </li>
+          <li>Click on Submit Test button on completion of the quiz.</li>
+        </ol>
+        <div class="row">
+          <div class="col col-sm-12 text-center">
+            <button type="cancel" class="btn btn-round" (click)="cancelExam()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-round btn-success" (click)="startStuentExam()">
+              <i class="fa fa-hourglass-start" aria-hidden="true"></i> START
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="questionBoxFlag">
+    <div class="row">
+      <div class="col-md-10 mr-auto ml-auto">
+        <div *ngFor="let dt of queList; let i = index" class="jumbotron" data-color="primary" id="{{ 'que' + i }}">
+          <h2 *ngIf="dt.question != undefined">{{ dt.question }}</h2>
+          <div *ngIf="dt.imageque != NULL">
+            <img src="http://localhost:8090{{dt.imageque}}">
+          </div>
+
+          <div *ngIf="dt.quetype == 'MCQ'">
+            <div *ngFor="let op of dt.options">
+              <div class="row">
+                <div class="col col-sm-12" *ngIf="op.optionlist != undefined">
+                  <label><input name="radioOpt" type="radio" value="{{op.optionlist}}"
+                      (change)="onItemChange(op , dt)" /> {{
+                    op.optionlist
+                    }} </label>
+                </div>
+                <div class="col col-sm-12"
+                  *ngIf="(op.imageoption != null &&  op.optionlist == undefined )|| (op.imageoption != 'null' &&  op.optionlist == undefined)">
+                  <img *ngIf="op.imageoption != null  || op.imageoption != 'null'"
+                    src="http://localhost:8090{{op.imageoption}}">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="dt.quetype != 'MCQ'" class="row">
+            <div class="col col-sm-12">
+              <label for="ansta">Write Your Answer Here</label>
+              <pre></pre>
+              <textarea id="ansta" [(ngModel)]="dt.answer" name="ansta" rows="4" cols="100"></textarea>
+            </div>
+          </div>
+          <div class="sq"></div>
+          <div class="lq"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 offset-md-5">
+        <button type="submit" class="btn btn-info btn-round" (click)="studentTestSubmit()">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit Test
+        </button>
+        <!-- <button type="cancel" class="btn btn-danger btn-round" (click)="closeTeacherForm()">
+                    <i class="fa fa-arrow-left"></i> Back</button> -->
+        <!-- <button type="submit" class="btn btn-info btn-round" routerLink="/manage/std">Add Standard</button> -->
+      </div>
+    </div>
+  </div>
+</div>

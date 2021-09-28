@@ -1,0 +1,395 @@
+<div class="main-content">
+    <div class="col-md-10 mr-auto ml-auto">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+            <div class="card card-wizard" data-color="primary" id="wizardProfile">
+                <form action="" method="">
+                    <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+                    <div class="card-header text-center">
+                        <h3 class="card-title">
+                            Build Your Profile
+                        </h3>
+                        <h5 class="description">This information will let us know more about you.</h5>
+                        <div class="wizard-navigation">
+                            <ul>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#about" data-toggle="tab" role="tab"
+                                        aria-controls="about" aria-selected="true">
+                                        <i class="nc-icon nc-single-02"></i> About
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#education" data-toggle="tab" role="tab"
+                                        aria-controls="education" aria-selected="true">
+                                        <i class="nc-icon nc-touch-id"></i> Education
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#address" data-toggle="tab" role="tab"
+                                        aria-controls="address" aria-selected="true">
+                                        <i class="nc-icon nc-pin-3"></i> Address
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#test" data-toggle="tab" role="tab" aria-controls="test"
+                                        aria-selected="true">
+                                        <i class="nc-icon nc-pin-3"></i> Test
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="about">
+                                <h5 class="info-text"> Let's start with the basic information (with validation)</h5>
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-4">
+                                        <div class="picture-container">
+                                            <div class="picture">
+                                                <img src="./assets/img/default-avatar.png" class="picture-src"
+                                                    id="wizardPicturePreview" title="" />
+                                                <input type="file" id="wizard-picture">
+                                            </div>
+                                            <h6 class="description">Choose Your Profile Picture</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus4===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="firstname"
+                                                        name="firstname" [(ngModel)]="visitorModel.firstname"
+                                                        placeholder=" Enter First Name " required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus4=true"
+                                                        (blur)="focus4=false" #fname="ngModel" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus5===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="middlename"
+                                                        name="middlename" [(ngModel)]="visitorModel.middlename"
+                                                        placeholder=" Enter Middle Name " required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus5=true"
+                                                        (blur)="focus5=false" #fname="ngModel" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus6===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="lastname"
+                                                        name="lastname" [(ngModel)]="visitorModel.lastname"
+                                                        placeholder=" Enter Last Name" required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus6=true"
+                                                        (blur)="focus6=false" #fname="ngModel" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus7===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="number" class="form-control" id="contact"
+                                                        [(ngModel)]="visitorModel.contact" name="contact"
+                                                        placeholder="Enter Contact Number" required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus7=true"
+                                                        (blur)="focus7=false" #fname="ngModel" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus8===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="email"
+                                                        [(ngModel)]="visitorModel.email" name="email"
+                                                        placeholder="Enter Email Id" required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus8=true"
+                                                        (blur)="focus8=false" #fname="ngModel" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus8===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-single-02"></i></span>
+                                                    </div>
+                                                    <input type="password" class="form-control" id="password"
+                                                        [(ngModel)]="visitorModel.password" name="password"
+                                                        placeholder="Enter Password" required value=""
+                                                        pattern="^[a-zA-Z ]+$" (focus)="focus8=true"
+                                                        (blur)="focus8=false" #fname="ngModel" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <!-- <div class="col-md-2"></div> -->
+                                            <div class="col-md-3">
+                                                <label>Select Gender</label>
+                                                <div class="form-check-radio">
+                                                    <label class="form-check-label" style="color: black !important">
+                                                        <input #genm class="form-check-input" name="gender"
+                                                            [(ngModel)]="visitorModel.gender" type="radio" value="male"
+                                                            ngModel />
+                                                        Male
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>&nbsp;</label>
+                                                <div class="form-check-radio">
+                                                    <label class="form-check-label" style="color: black !important">
+                                                        <input #genf class="form-check-input" name="gender"
+                                                            [(ngModel)]="visitorModel.gender" type="radio"
+                                                            value="female" ngModel />
+                                                        Female
+                                                        <span class="form-check-sign"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-whatsapp"></i></span>
+                                            </div>
+                                            <input type="number" class="form-control" id="fname"
+                                                [(ngModel)]="visitorModel.wapp" name="wapp"
+                                                placeholder="Enter WhatsApp Number (required)" required value=""
+                                                pattern="^[a-zA-Z ]+$" (focus)="focus=true" (blur)="focus=false"
+                                                #fname="ngModel" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="nc-icon nc-circle-10"></i></span>
+                                            </div>
+                                            <input type="number" class="form-control" id="parents"
+                                                [(ngModel)]="visitorModel.parents" name="parents"
+                                                placeholder="Enter Father Number" required value="" pattern="^[0-9]+$"
+                                                (focus)="focus1=true" (blur)="focus1=false" #parents="ngModel" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus2===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="nc-icon nc-circle-10"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="mname"
+                                                [(ngModel)]="visitorModel.mname" name="mname"
+                                                placeholder="Enter Mother Name" required value="" pattern="^[a-zA-Z ]+$"
+                                                (focus)="focus2=true" (blur)="focus2=false" #mname="ngModel" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus3===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                            </div>
+                                            <input type="number" class="form-control" id="mnumber"
+                                                [(ngModel)]="visitorModel.mnumber" name="mnumber"
+                                                placeholder="Enter Mother Number" required value="" pattern="^[0-9]+$"
+                                                (focus)="focus3=true" (blur)="focus3=false" #mnumber="ngModel" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="education">
+                                <h5 class="info-text"> Let's start with the basic information (with validation)</h5>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-school"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="schoolname"
+                                                        [(ngModel)]="visitorModel.schoolname" name="schoolname"
+                                                        placeholder="Enter School Name" required value=""
+                                                        pattern="^[a-zA-Z., ]+$" (focus)="focus=true"
+                                                        (blur)="focus=false" #schoolname="ngModel" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus2===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="nc-icon nc-send"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="lastqulification"
+                                                        [(ngModel)]="visitorModel.lastqulification"
+                                                        name="lastqulification" placeholder="Enter Last Qualification"
+                                                        required value="" pattern="^[a-zA-Z., ]+$" (focus)="focus2=true"
+                                                        (blur)="focus2=false" #lastqulification="ngModel" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group"
+                                                    [ngClass]="{'input-group-focus':focus1===true}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-percent"></i></span>
+                                                    </div>
+                                                    <input type="number" class="form-control" id="percentage"
+                                                        [(ngModel)]="visitorModel.percentage" name="percentage"
+                                                        placeholder="Enter Percentage" required value=""
+                                                        pattern="^[a-zA-Z., ]+$" (focus)="focus1=true"
+                                                        (blur)="focus1=false" #percentage="ngModel" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="address">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12">
+                                        <h5 class="info-text"> Are you living in a nice area? </h5>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <label>Street Name</label>
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+                                            <div class="input-group" [ngClass]="{'input-group-focus':focus2===true}">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i
+                                                            class="fa fa-map-marker"></i></span>
+                                                </div>
+                                                <textarea type="text" class="form-control" id="address" name="address"
+                                                    rows="3" cols="30" [(ngModel)]="visitorModel.address"
+                                                    placeholder="Enter Address" required value=""
+                                                    pattern="^[A-Za-z0-9'\.\-\s\,]+$" (focus)="focus=true"
+                                                    (blur)="focus=false" #address="ngModel"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>City</label>
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" id="city"
+                                                [(ngModel)]="visitorModel.city" name="city" placeholder="Enter City"
+                                                required value="" pattern="^[a-zA-Z ]+$" (focus)="focus1=true"
+                                                (blur)="focus1=false" #city="ngModel" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label>Pincode</label>
+                                        <div class="input-group" [ngClass]="{'input-group-focus':focus2===true}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-map-pin"></i></span>
+                                            </div>
+                                            <input type="number" class="form-control" id="pincode"
+                                                [(ngModel)]="visitorModel.pincode" name="pincode"
+                                                placeholder="Enter Pincode" required value="" pattern="^[0-9 ]+$"
+                                                (focus)="focus2=true" (blur)="focus2=false" #pincode="ngModel" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="test">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12 ">
+                                        <h5 class="info-text"> Select According Your Choice.</h5>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Select Standard</label>
+                                        <div class="dropdown form-group">
+                                            <button class="dropdown-toggle btn btn-round btn-block" type="button"
+                                                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                {{ selectedstd }}
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <div class="dropdown-header">Select Standard</div>
+                                                <div *ngFor="let std of stdlist">
+                                                    <a class="dropdown-item" (click)="selectStdList(std.id)">{{
+                                                        std.stdname
+                                                        }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Select Subject</label>
+                                        <div class="dropdown form-group">
+                                            <button class="dropdown-toggle btn btn-round btn-block" type="button"
+                                                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                {{ selectedSubject }}
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <div class="dropdown-header">Select Subject</div>
+                                                <div *ngFor="let sub of subjects">
+                                                    <a class="dropdown-item" (click)="selectSubjectList(sub.id)">{{
+                                                        sub.subject
+                                                        }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="pull-right">
+                            <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' name='next'
+                                value='Next' />
+                            <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish'
+                                value='Finish' (click)="Savevisitor()" />
+                        </div>
+                        <div class="pull-left">
+                            <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous'
+                                value='Previous' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- wizard container -->
+    </div>
+
+</div>

@@ -1,0 +1,179 @@
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9">
+          <h4 class="card-title">Add Subject</h4>
+        </div>
+        <div class="ml-md-auto">
+          <button type="submit" class="btn btn-info btn-round" routerLink="/manage/std">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add Standard
+          </button>
+          <button type="cancel" class="btn btn-danger btn-round" routerLink="/dashboard">
+            <i class="fa fa-arrow-left"></i> Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" name="SubjectForm" #SubjectForm="ngForm">
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Select Standard</label>
+          <div class="col-sm-3">
+            <div class="dropdown form-group">
+              <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button"
+                name="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                {{ selectedStd }}
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-header">Select STD</div>
+                <div *ngFor="let s of STD">
+                  <a class="dropdown-item" (click)="selectSTDList(s.id)" style="color:#252422 !important">{{
+                    s.stdname
+                    }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngFor="let add of addSubjects; let ind = index">
+          <div class="col-md-4"></div>
+          <div class="col-md-3">
+            <div class="form-group" [ngClass]="{ 'form-group-focus': focus === true }">
+              <input type="text" class="form-control" id="sname" name="sname" placeholder=" Enter Subject Name"
+                [(ngModel)]="add.subject" required value="" pattern="^[a-zA-Z ]+$" (focus)="focus = true"
+                #sname="ngModel" />
+            </div>
+            <div *ngIf="sname.errors && (sname.dirty || sname.touched)" class="alert alert-danger">
+              <div *ngIf="sname.errors.required">Subject Name is required</div>
+              <div [hidden]="!sname.errors('pattern')">
+                Enter Only Characters.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <i class="fa fa-plus-circle" aria-hidden="true" (click)="addSubjectList()"
+              style="font-size: 33px !important; margin-top: 5% !important"></i>
+          </div>
+          <div class="col-md-1" *ngIf="ind > 0">
+            <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeSubjectList(ind)" style="
+                font-size: 33px !important;
+                margin-top: 5% !important;
+                margin-left: -80px !important;
+              "></i>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="ml-md-auto">
+          <button type="submit" class="btn btn-info btn-round" [disabled]="!SubjectForm.form.valid || !selectedStd"
+            (click)="saveSubject(add)">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-sm-4">
+          <h4 class="card-title">Subjects With Standard</h4>
+        </div>
+        <label class="col-sm-1 col-form-label">Select Standard</label>
+        <div class="col-sm-3">
+          <div class="dropdown form-group">
+            <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button" name="dropdownMenuButton"
+              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ selectedStd }}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-header">Select STD</div>
+              <div *ngFor="let s of STD">
+                <a class="dropdown-item" (click)="selectSTDList(s.id)">{{
+                  s.stdname
+                  }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <div class="toolbar">
+
+      </div>
+      <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>{{ dataTable.headerRow[0] }}</th>
+            <th>{{ dataTable.headerRow[1] }}</th>
+            <th>{{ dataTable.headerRow[2] }}</th>
+            <!-- <th>{{ dataTable.headerRow[3] }}</th>
+            <th>{{ dataTable.headerRow[4] }}</th> -->
+            <th class="disabled-sorting text-right">{{ dataTable.headerRow[5] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of dataTable.dataRows;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{selectedStd}}</td>
+            <td>{{row.subject}}</td>
+            <!-- <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td> -->
+            <td class="text-right">
+              <a href="javascript:void(0)" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"
+                  data-toggle="modal" data-target="#noticeModal" (click)="editSubject(row)"></i></a>
+              <a href="javascript:void(0)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
+                  (click)="removeSubject(row.id)"></i></a>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h5 class="modal-title" id="myModalLabel">Update Subject Name</h5>
+        </div>
+        <div class="modal-body">
+          <div class="instruction">
+            <form class="form-horizontal" name="mainCateRegForm" #mainCateRegForm="ngForm">
+              <div class="row">
+                <label class="col-sm-4 col-form-label">Stanadard</label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="username" name="username" [(ngModel)]="selectedStd"
+                      disabled />
+                  </div>
+                </div>
+                <label class="col-sm-4 col-form-label">Update Subject</label>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="editSub.subject" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-info btn-round" data-dismiss="modal" (click)="updateSubject(editSub)">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

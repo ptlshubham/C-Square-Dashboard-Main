@@ -1,0 +1,517 @@
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9">
+          <h4 class="card-title">{{ std[0].stdname }}</h4>
+        </div>
+        <div class="ml-md-auto">
+          <button type="submit" class="btn btn-info btn-round" *ngIf="Roles == 'Admin'" (click)="addSubject()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add Subject
+          </button>
+          <button type="cancel" class="btn btn-danger btn-round" routerLink="/dashboard">
+            <i class="fa fa-arrow-left"></i> Back
+          </button>
+          <!-- <button type="submit" class="btn btn-info btn-round" routerLink="/manage/std">Add Standard</button> -->
+        </div>
+      </div>
+    </div>
+    <div class="card-body"></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 col-md-6 col-sm-6" *ngFor="let s of subjects; let i = index">
+      <div class="card card-stats" (click)="openQuestionList(s)" [style.box-shadow]="s.color">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="numbers">
+                <p class="card-title" style="
+                    font-size: 22px !important;
+                    text-align: justify;
+                    font-weight: 600;
+                  ">
+                  {{ s.subject }}
+                </p>
+                <!-- <p class="card-category">Subject: {{s.subjectList.length}} -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <hr />
+          <div class="stats">Total Questions: {{ s.question.length }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="questionList">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9">
+          <h4 class="card-title">Manage Questionnaire</h4>
+        </div>
+        <div class="ml-md-auto">
+          <button type="submit" class="btn btn-success btn-round" data-toggle="modal" data-target="#testModal"
+            *ngIf="isMasterSel" (click)="addTest()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add Test
+          </button>
+          <button type="submit" class="btn btn-info btn-round" (click)="openQuestionBox()">
+            <i class="fa fa-plus" aria-hidden="true"></i> Add Question
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="text-primary">
+            <th class="text-left">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" [(ngModel)]="isMasterSel" name="list_name" value="h1"
+                    (change)="checkUncheckAll()" type="checkbox" />
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </th>
+            <th class="text-center">#</th>
+            <th class="text-center">Questions type</th>
+            <th class="text-center">Questions</th>
+            <th class="text-center">Question Image</th>
+            <th class="text-center">Marks</th>
+            <th class="text-center">Time Duration</th>
+            <th class="text-right">Actions</th>
+          </thead>
+          <tbody>
+            <tr *ngFor=" let item of que | paginate: { itemsPerPage: 5, currentPage: p };">
+              <td>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" [(ngModel)]="item.isactive" name="list_name" value="{{ item.id }}"
+                      (change)="isAllSelected()" type="checkbox" />
+                    <span class="form-check-sign"></span>
+                  </label>
+                </div>
+              </td>
+              <td class="text-center">{{ item.index}}</td>
+              <td class="text-center">{{ item.quetype }}</td>
+              <td class="text-center" *ngIf="item.question == 'undefined'"></td>
+              <td class="text-center" *ngIf="item.question != 'undefined'">{{ item.question }}</td>
+              <td>
+                <div class="img-container">
+                  <img *ngIf="item.imageque != null" src="http://localhost:8090{{ item.imageque }}"
+                    style="height: 40% !important;width: 40% !important;" />
+                </div>
+              </td>
+              <td class="text-center">{{ item.marks }} Marks</td>
+              <td class="text-center">{{ item.time }} Minute</td>
+              <td class="text-right">
+                <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
+                  <i class="fa far fa-edit" (click)="editQuestion(item)"></i>
+                </button>
+                &nbsp;
+                <button type="button" rel="tooltip" (click)="removeQuestion(item.id)"
+                  class="btn btn-danger btn-icon btn-sm">
+                  <i class="fa fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Theme Data Table -->
+      <!-- <div class="toolbar">
+      </div>
+      <table id="queTable" datatable [dtOptions]="dtOptions" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" [(ngModel)]="isMasterSel" name="list_name" value="h1"
+                    (change)="checkUncheckAll()" type="checkbox" />
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </th>
+            <th>{{ queTable.headerRow[0] }}</th>
+            <th>{{ queTable.headerRow[1] }}</th>
+            <th>{{ queTable.headerRow[2] }}</th>
+            <th>{{ queTable.headerRow[3] }}</th>
+            <th>{{ queTable.headerRow[4] }}</th>
+            <th>{{ queTable.headerRow[5] }}</th>
+            <th>{{ queTable.headerRow[6] }}</th>
+            <th class="disabled-sorting text-right">{{ queTable.headerRow[7] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of queTable.dataRows;let i=index">
+            <td>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" [(ngModel)]="row.isactive" name="list_name" value="{{ row.id }}"
+                    (change)="isAllSelected()" type="checkbox" />
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </td>
+            <td>{{i+1}}</td>
+            <td>{{row.quetype}}</td>
+            <td *ngIf="row.question == 'undefined'"></td>
+            <td *ngIf="row.question != 'undefined'">{{row.question}}</td>
+            <td>
+              <div class="img-container" *ngIf="row.imageque != null">
+                <img *ngIf="row.imageque != null" src="http://localhost:8090{{row.imageque}}"
+                  style="height: 40% !important;width: 40% !important;" />
+              </div>
+            </td>
+            <td>{{row.marks}} Marks</td>
+            <td>{{row.time}} Minute</td>
+            <td class="text-right">
+              <a href="javascript:void(0)" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"
+                  data-toggle="modal" data-target="#noticeModal" (click)="editQuestion(row)"></i></a>
+              <a href="javascript:void(0)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"
+                  (click)="removeQuestion(row.id)"></i></a>
+            </td>
+
+          </tr>
+        </tbody>
+      </table> -->
+      <!-- Theme Data Table End -->
+
+
+
+
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="ml-md-auto">
+          <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="addQuestion">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-9">
+          <h4 class="card-title">Add New Question</h4>
+        </div>
+        <div class="col-md-3 ml-md-auto">
+          <div class="dropdown form-group">
+            <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button" name="dropdownMenuButton"
+              id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ selectedQue }}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-header">Select Question type</div>
+              <div *ngFor="let t of type">
+                <a class="dropdown-item" selected (click)="selectQue(t.id)">{{
+                  t.name
+                  }}</a>
+              </div>
+            </div>
+          </div>
+          <!-- <button type="submit" class="btn btn-round" (click)="closeQue()">Cancel</button> -->
+          <!-- <button type="submit" class="btn btn-info btn-round">Add Question</button> -->
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <form class="form-horizontal" name="questionRegForm" #questionRegForm="ngForm">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label class="col-form-label" for="question">Question</label>
+              <br />
+              <textarea class="form-control" id="question" rows="3" name="question" placeholder="Enter a question here"
+                [(ngModel)]="questionModel.question"></textarea>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="col-form-label" for="question">Question Image</label>
+            <div>
+              <p style="color: red !important; font-weight: 600 !important">
+                Images Size Mustbe 200*1000.
+              </p>
+            </div>
+            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <div class="fileinput-new thumbnail">
+                <img src="./assets/img/image_placeholder.jpg" alt="..."
+                  *ngIf="questionModel.imageque == 'null' || questionModel.imageque == null" />
+                <img src="http://localhost:8090{{questionModel.imageque}}"
+                  *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null">
+              </div>
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+              <div>
+                <span class="btn btn-rose btn-round btn-file">
+                  <span *ngIf="questionModel.imageque == 'null' || questionModel.imageque == null">Select Image</span>
+                  <span *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null">Change</span>
+                  <input type="file" id="questionImage" name="questionImage" (change)="select($event)" />
+                </span>
+                <a href="javascript:void(0)" class="btn btn-danger btn-round "
+                  *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null"
+                  (click)="removeTempPic()"><i class="fa fa-times"></i> Remove</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- <div class="col-md-4" [ngClass]="{'form-group-focus':focus===true}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="marks" name="marks" placeholder="Enter Marks"
+                                [(ngModel)]="questionModel.marks" required value="" pattern="^[0-9]*$"
+                                (focus)="focus=true" #productPrice="ngModel">
+                        </div>
+                        <div *ngIf="marks.errors && (marks.dirty || marks.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="marks.errors.required">Marks is required.</div>
+                            <div [hidden]="!marks.errors('pattern')">Enter Only Numbers.</div>
+                        </div>
+                    </div> -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-form-label" for="answer">Marks</label>
+              <input type="text" class="form-control" id="marks" name="marks" placeholder="Enter Marks"
+                [(ngModel)]="questionModel.marks" />
+            </div>
+          </div>
+          <!-- <div class="col-md-4" [ngClass]="{'form-group-focus':focus===true}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="duration" name="duration"
+                            placeholder="Enter Time Duration" [(ngModel)]="questionModel.time" required value="" pattern="^[0-9]*$"
+                                (focus)="focus=true" #productPrice="ngModel">
+                        </div>
+                        <div *ngIf="duration.errors && (duration.dirty || duration.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="duration.errors.required">Minute is required.</div>
+                            <div [hidden]="!duration.errors('pattern')">Enter Only Numbers.</div>
+                        </div>
+                    </div> -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-form-label" for="duration">Time Duration</label>
+              <input type="text" class="form-control" id="duration" name="duration" placeholder="Enter Time Duration"
+                [(ngModel)]="questionModel.time" />
+            </div>
+          </div>
+          <!-- <div class="col-md-4" *ngIf="selectedQue == 'MCQ'">
+                    <div class="form-group">
+                        <label class="col-form-label" for="answer">Answer</label>
+                        <input type="text" class="form-control" id="answer" name="answer"
+                            placeholder="Enter correct answer">
+                    </div>
+                </div> -->
+        </div>
+        <div *ngIf="selectedQue == 'MCQ'">
+          <div class="row" *ngFor="let add of addOptions; let ind = index">
+            <div class="col-md-4">
+              <label class="col-form-label" for="question">
+                Options {{ ind + 1 }}</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="options" name="options" placeholder=" Enter option value"
+                  [(ngModel)]="add.option" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="col-form-label" for="question">Options Image {{ ind + 1 }}</label>
+              <div>
+                <p style="color: red !important; font-weight: 600 !important">
+                  Images Size Mustbe 200*1000.
+                </p>
+              </div>
+              <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                <div class="fileinput-new thumbnail">
+                  <img src="./assets/img/image_placeholder.jpg" alt="..."
+                    *ngIf="add.imageoption == 'null' || add.imageoption == null" />
+                  <img src="http://localhost:8090{{add.imageoption}}"
+                    *ngIf="add.imageoption != 'null' || add.imageoption != null">
+                </div>
+                <!-- <div class="fileinput-preview fileinput-exists thumbnail"></div>x -->
+                <div>
+                  <span class="btn btn-rose btn-round btn-file">
+                    <span *ngIf="add.imageoption == 'null' || add.imageoption == null">Select Image</span>
+                    <span *ngIf="add.imageoption != 'null' || add.imageoption != null">Change</span>
+                    <input type="file" id="optionsImage" name="optionsImage" (change)="imageOption($event , ind)" />
+                  </span>
+                  <a href="javascript:void(0)" class="btn btn-danger btn-round"
+                    *ngIf="add.imageoption != 'null' || add.imageoption != null" (click)="removeOptionTempImg(ind)"><i
+                      class="fa fa-times"></i> Remove</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <i class="fa fa-plus-circle" aria-hidden="true" (click)="addOptionsList()"
+                style="font-size: 33px !important; margin-top: 54% !important"></i>
+            </div>
+            <div class="col-md-1" *ngIf="ind > 0">
+              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeOptionsList(ind)" style="
+                  font-size: 33px !important;
+                  margin-top: 54% !important;
+                  margin-left: -80px !important;
+                "></i>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedQue == 'MCQ'">
+          <div class="row" *ngFor="let add of addAnswers; let ind = index">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="col-form-label" for="answer">Answer {{ ind + 1 }}
+                </label>
+                <input type="text" class="form-control" id="answer" name="answer" placeholder="Enter correct answer"
+                  [(ngModel)]="add.answer" />
+              </div>
+            </div>
+            <div class="col-md-1">
+              <i class="fa fa-plus-circle" aria-hidden="true" (click)="addAnswersList()"
+                style="font-size: 33px !important; margin-top: 54% !important"></i>
+            </div>
+            <div class="col-md-1" *ngIf="ind > 0">
+              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeAnswersList(ind)" style="
+                  font-size: 33px !important;
+                  margin-top: 54% !important;
+                  margin-left: -80px !important;
+                "></i>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="ml-md-auto">
+          <button type="submit" class="btn btn-round" (click)="closeQue()">
+            Cancel
+          </button>
+          &nbsp;
+          <button type="submit" class="btn btn-info btn-round" *ngIf="submitButton"
+            [disabled]="!questionRegForm.form.valid || !selectedQue" (click)="saveNewQuestion(questionModel)">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+          </button>
+          <button type="submit" class="btn btn-info btn-round" *ngIf="updateButton"
+            (click)="updateQuestion(questionModel)">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Test Modal -->
+  <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-notice">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="nc-icon nc-simple-remove"></i>
+          </button>
+          <h5 class="modal-title" id="myModalLabel">Create Test / Quiz</h5>
+        </div>
+        <div class="modal-body">
+          <div class="instruction">
+            <form class="form-vertical" #quizform="ngForm">
+              <div class="form-group row">
+                <label for="testname" class="col-sm-2 col-form-label">Test Name:
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" [ngModel]="testName" class="form-control" name="testname" value="{{ testName }}" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="standard" class="col-sm-2 col-form-label">Standard:
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [ngModel]="standardName" readonly class="form-control" name="standard" value="" />
+                  <input type="hidden" [ngModel]="standardId" readonly class="form-control" name="standardId"
+                    value="" />
+                </div>
+                <label for="subject" class="col-sm-2 col-form-label">Subject:
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [ngModel]="subjectName" readonly class="form-control" name="subject" value="" />
+                  <input type="hidden" [ngModel]="subjectId" readonly class="form-control" name="subjectId" value="" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="totalquestion" class="col-sm-2 col-form-label">Total Questions:
+                </label>
+                <div class="col-sm-2">
+                  <input type="text" [ngModel]="totalQuestions" readonly class="form-control-plaintext"
+                    name="totalquestion" value="{{ totalQuestions }}" />
+                </div>
+                <label for="totalmarks" class="col-sm-2 col-form-label">Total Marks:
+                </label>
+                <div class="col-sm-2">
+                  <input type="text" [ngModel]="totalMarks" readonly class="form-control-plaintext" name="totalmarks"
+                    value="{{ totalMarks }}" />
+                </div>
+                <label for="totalduration" class="col-sm-2 col-form-label">Duration:
+                </label>
+                <div class="col-sm-2">
+                  <input type="text" [ngModel]="duration" readonly class="form-control-plaintext" name="totalduration"
+                    value="{{ duration }}" />
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table ng-if="checkedQuestionList.length > 0" class="table">
+                      <thead class="text-primary">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Questions type</th>
+                        <th class="text-center">Questions</th>
+                        <th class="text-center">Questions Image</th>
+                        <th class="text-center">Marks</th>
+                        <th class="text-center">Duration(Minutes)</th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="
+                            let sq of checkedQuestionList;
+                            let i = index;
+                            let j = index
+                          ">
+                          <td class="text-center">{{ i + 1 }}</td>
+                          <td class="text-center">{{ sq.quetype }}</td>
+                          <td class="text-center" *ngIf="sq.question == 'undefined'"></td>
+                          <td class="text-center" *ngIf="sq.question != 'undefined'">{{ sq.question }}</td>
+                          <td class="text-center">
+                            <div class="img-container">
+                              <img *ngIf="sq.imageque != null" src="http://localhost:8090{{ sq.imageque }}"
+                                style="height: 40% !important;width: 40% !important;" />
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <input type="text" class="form-control" name="tb-marks"
+                              (keyup)="setMarks($event.target.value, sq)" value="{{ sq.marks }}" />
+                          </td>
+                          <td class="text-center">
+                            <input type="text" class="form-control" name="tb-duration"
+                              (keyup)="setDuration($event.target.value, sq)" value="{{ sq.time }}" />
+                          </td>
+                          <input type="hidden" name="qid" value="{{ sq.id }}" />
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-center">
+                <button type="submit" class="btn btn-primary btn-round" data-dismiss="modal"
+                  (click)="createTest(quizform.value)">
+                  <i class="fa fa-plus" aria-hidden="true"></i> Create
+                </button>
+                <button type="button " class="btn btn-secondary btn-round" data-dismiss="modal">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

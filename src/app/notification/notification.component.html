@@ -1,0 +1,88 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 text-center">
+            <div class="card  card-tasks">
+                <div class="card-header ">
+                    <h4 class="card-title">Upcoming Events</h4>
+                    <!-- <h5 class="card-category">Backend development</h5> -->
+                </div>
+                <div class="card-body ">
+                    <div class="table-full-width table-responsive">
+                        <table class="table">
+
+                            <tbody>
+                                <tr *ngFor="let ev of eventList,let i = index">
+
+                                    <td class="text-left">
+                                        {{ev.date}}
+                                    </td>
+                                    <td class="text-left">{{ev.title}}</td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title=""
+                                            class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
+                                            data-original-title="Edit Task">
+                                            <i class="nc-icon nc-ruler-pencil"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title=""
+                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                                            data-original-title="Remove">
+                                            <i class="nc-icon nc-simple-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <!-- <i class="fa fa-refresh spin"></i> Updated 3 minutes ago -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12 text-center">
+            <div class="card  card-tasks">
+                <div class="card-header ">
+                    <h4 class="card-title">New Horizons</h4>
+                    <h5 class="card-category">Backend development</h5>
+                </div>
+                <div class="card-body ">
+                    <div class="table-full-width table-responsive">
+                        <!-- <table class="table">
+                            <tbody>
+                                <tr *ngFor="ev of eventList,let i of ind">
+                                    <td class="text-left">
+                                        {{ev.date}}
+                                    </td>
+                                    <td class="text-left">{{ev.title}}
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title=""
+                                            class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
+                                            data-original-title="Edit Task">
+                                            <i class="nc-icon nc-ruler-pencil"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title=""
+                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                                            data-original-title="Remove">
+                                            <i class="nc-icon nc-simple-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody> -->
+                        <!-- </table> -->
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-refresh spin"></i> Updated 3 minutes ago
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

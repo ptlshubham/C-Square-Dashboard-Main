@@ -1,0 +1,133 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-calendar">
+            <div class="card-content">
+              <full-calendar [options]="calendarOptions"></full-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title"> Add Events</h4>
+            </div>
+            <div class="card-body">
+              <form class="form-horizontal" name="eventRegForm" #eventRegForm="ngForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="col-form-label" for="date">Selected Date</label>
+                      <input type="text" class="form-control" disabled id="date" name="date"
+                        placeholder="Please Select Date First" value="{{selected}}" />
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <label class="col-form-label" for="title">Add Event Title</label>
+                    <div class="form-group" [ngClass]="{ 'form-group-focus': focus === true }">
+                      <input type="text" class="form-control" id="title" name="title" placeholder="Enter Events Title"
+                        [(ngModel)]="calendarModel.title" required value="" pattern="^[a-zA-Z0-9 .`,''!]+$"
+                        (focus)="focus = true" #title="ngModel" />
+                    </div>
+                    <div *ngIf="title.errors && (title.dirty || title.touched)" class="alert alert-danger">
+                      <div *ngIf="title.errors.required">
+                        Event Title is required
+                      </div>
+                      <div [hidden]="!title.errors('pattern')">
+                        Enter Only Characters and Numbers.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row"> -->
+                <!-- <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="col-form-label" for="date">Select Event Color</label>
+                      <input [value]="eventColor" [style.background]="eventColor" [cpCancelButton]="true"
+                        [(colorPicker)]="eventColor" />
+                    </div>
+                  </div> -->
+
+
+                <!-- </div> -->
+              </form>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="ml-md-auto">
+                  <button type="submit" class="btn btn-info btn-round"
+                    [disabled]="!eventRegForm.form.valid || !selected" (click)="addEventsDetails()">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Add New Event
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card  card-tasks">
+            <div class="card-header ">
+              <h4 class="card-title">Scheduled Events List</h4>
+            </div>
+            <div class="card-body ">
+              <div class="table-full-width table-responsive">
+                <table class="table table-striped">
+                  <thead class="text-primary">
+                    <th class="text-center">
+                      #
+                    </th>
+                    <th class="text-center">
+                      Event Date
+                    </th>
+                    <th class="text-center">
+                      Event Title
+                    </th>
+                    <th class="text-right">
+                      Action
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let ev of eventList,let i = index">
+                      <td class="text-center">
+                        {{i+1}}
+                      </td>
+                      <td class="text-center">
+                        {{ev.date}}
+                      </td>
+                      <td class="text-center">
+                        {{ev.title}}
+                      </td>
+                      <td class="text-right">
+
+                        <button type="button" rel="tooltip" class="btn btn-danger btn-icon btn-sm "
+                          (click)="deleteEventList(ev.id)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <hr>
+              <div class="stats">
+                <i class="fa fa-refresh spin"></i> Updated 3 minutes ago
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
