@@ -143,19 +143,19 @@
             <div class="col-md-10 mr-auto ml-auto">
                 <div *ngFor="let dt of queList; let i = index" class="jumbotron" data-color="primary"
                     id="{{ 'que' + i }}">
-                    <div  >
+                    <div>
 
-                        
+
                         <h2 *ngIf="dt.question != undefined ">{{ dt.question }}</h2>
-                    
-                        <div >
+
+                        <div>
                             <div *ngFor="let op of dt.options">
                                 <div class="row">
                                     <div class="col col-sm-12" *ngIf="op.optionlist != undefined">
                                         <label>
                                             <input name="radioOpt" type="radio" value="{{op.optionlist}}"
                                                 (change)="onItemChange(op , dt)" />
-                                                {{op.optionlist}}
+                                            {{op.optionlist}}
                                         </label>
                                     </div>
                                     <!-- <div class="col col-sm-12" *ngIf="op.imageoption != 'null' || op.imageoption != ' ' ">

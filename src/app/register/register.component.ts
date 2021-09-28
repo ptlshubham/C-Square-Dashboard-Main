@@ -342,22 +342,9 @@ export class RegisterComponent implements OnInit {
   getStudent() {
     this.registerService.getStudentList(this.list).subscribe((data: any) => {
       this.students = data;
-      debugger
-      if (this.Roles == 'Admin') {
-        this.studentTable = {
-          headerRow: ['#', 'Name', 'GR.Number', 'Email', 'Test List', 'Attandance', 'Actions'],
-          footerRow: ['#', 'Name', 'GR.Number', 'Email', 'Test List', 'Attandance', 'Actions'],
-          dataRows: this.students
-        };
+      for (let i = 0; i < this.students.length; i++) {
+        this.students[i].index = i + 1;
       }
-      else {
-        this.StuTeacherTable = {
-          headerRow: ['#', 'Student Profile', 'Name', 'Gender', 'Email', 'Test List', 'Attandance', 'Actions'],
-          footerRow: ['#', 'Student Profile', 'Name', 'Gender', 'Email', 'Test List', 'Attandance', 'Actions'],
-          dataRows: this.students
-        };
-      }
-
     });
   }
   getSubmittedTest(id) {
@@ -380,12 +367,9 @@ export class RegisterComponent implements OnInit {
   getTeacher() {
     this.registerService.getTeacherList().subscribe((data: any) => {
       this.reg = data;
-      this.teacherTable = {
-        headerRow: ['#', 'Name', 'Qualification', 'Email', 'Contact Number', 'Actions'],
-        footerRow: ['#', 'Name', 'Qualification', 'Email', 'Contact Number', 'Actions'],
-        dataRows: this.reg
-      };
-
+      for (let i = 0; i < this.reg.length; i++) {
+        this.reg[i].index = i + 1;
+      }
     });
   }
 

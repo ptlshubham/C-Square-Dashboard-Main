@@ -4,6 +4,7 @@ import { TestlistComponent } from './testlist.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TestlistRoutes } from './testlist.routing';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -12,6 +13,7 @@ import { TestlistRoutes } from './testlist.routing';
   imports: [
     CommonModule,
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forChild(TestlistRoutes)
   ]
 })

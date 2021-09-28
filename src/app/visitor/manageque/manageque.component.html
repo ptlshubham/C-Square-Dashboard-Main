@@ -153,26 +153,26 @@
                         <th class="text-right">Actions</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let q of que; let i = index">
+                        <tr *ngFor="let item of que | paginate: { itemsPerPage: 5, currentPage: p }">
                             <td>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" [(ngModel)]="q.isactive" name="list_name"
-                                            value="{{ q.id }}" (change)="isAllSelected()" type="checkbox" />
+                                        <input class="form-check-input" [(ngModel)]="item.isactive" name="list_name"
+                                            value="{{ item.id }}" (change)="isAllSelected()" type="checkbox" />
                                         <span class="form-check-sign"></span>
                                     </label>
                                 </div>
                             </td>
-                            <td class="text-center">{{ i + 1 }}</td>
-                            <td class="text-center">{{ q.question }}</td>
-                            <td class="text-center">{{ q.marks }} Marks</td>
-                            <td class="text-center">{{ q.time }} Minute</td>
+                            <td class="text-center">{{item.index }}</td>
+                            <td class="text-center">{{ item.question }}</td>
+                            <td class="text-center">{{ item.marks }} Marks</td>
+                            <td class="text-center">{{ item.time }} Minute</td>
                             <td class="text-right">
                                 <button type="button" rel="tooltip" class="btn btn-success btn-icon btn-sm">
-                                    <i class="fa far fa-edit" (click)="editQuestion(q)"></i>
+                                    <i class="fa far fa-edit" (click)="editQuestion(item)"></i>
                                 </button>
                                 &nbsp;
-                                <button type="button" rel="tooltip" (click)="removeQuestion(q.id)"
+                                <button type="button" rel="tooltip" (click)="removeQuestion(item.id)"
                                     class="btn btn-danger btn-icon btn-sm">
                                     <i class="fa fa-times"></i>
                                 </button>
@@ -180,6 +180,14 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="ml-md-auto">
+                    <pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true">
+                    </pagination-controls>
+                </div>
             </div>
         </div>
     </div>
@@ -355,7 +363,8 @@
                                                 <th class="text-center">Duration(Minutes)</th>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let sq of checkedQuestionList;let i = index;let j = index">
+                                                <tr
+                                                    *ngFor="let sq of checkedQuestionList | paginate: { itemsPerPage: 5, currentPage: p } ;let i = index;let j = index">
                                                     <td class="text-center">{{ i + 1 }}</td>
                                                     <td>{{ sq.question }}</td>
 
@@ -373,6 +382,15 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="row">
+                                            <div class="ml-md-auto">
+                                                <pagination-controls (pageChange)="p = $event" autoHide="true"
+                                                    responsive="true">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

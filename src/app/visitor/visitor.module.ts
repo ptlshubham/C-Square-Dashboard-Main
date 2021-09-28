@@ -7,6 +7,7 @@ import { ManagequeComponent } from './manageque/manageque.component';
 import { FormsModule } from '@angular/forms';
 import { VisitorexamComponent } from './visitorexam/visitorexam.component';
 import { VisitorlistComponent } from './visitorlist/visitorlist.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -16,6 +17,7 @@ import { VisitorlistComponent } from './visitorlist/visitorlist.component';
   imports: [
     CommonModule,
     FormsModule,
+    NgxPaginationModule,
     RouterModule.forChild(VisitorRoutes),
   ]
 })

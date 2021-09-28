@@ -22,7 +22,8 @@ export class Register {
         public propic?: string,
         public cfees?: string,
         public schoolname?: string,
-        public otp?: number
+        public otp?: number,
+        public index?: number
 
 
 

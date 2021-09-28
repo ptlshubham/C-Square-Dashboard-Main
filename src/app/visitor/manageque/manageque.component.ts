@@ -204,6 +204,9 @@ export class ManagequeComponent implements OnInit {
   getQueList() {
     this.VisitorService.getVisitorQue(this.subjectId).subscribe((data: any) => {
       this.que = data;
+      for (let i = 0; i < this.que.length; i++) {
+        this.que[i].index = i + 1;
+      }
     });
   }
   removeQuestion(id) {
@@ -247,6 +250,9 @@ export class ManagequeComponent implements OnInit {
     for (var i = 0; i < this.que.length; i++) {
       if (this.que[i].isactive) {
         this.checkedQuestionList.push(this.que[i]);
+        for (var i = 0; i < this.checkedQuestionList.length; i++) {
+          this.checkedQuestionList[i].isactive = this.isMasterSel;
+        }
         this.totalMarks = this.totalMarks + this.que[i].marks;
         this.duration = this.duration + this.que[i].time;
       }

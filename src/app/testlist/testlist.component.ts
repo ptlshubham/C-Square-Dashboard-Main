@@ -3,12 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'app/api.service';
 import { Subject } from 'app/manage/subject/subject.model';
 import { RegisterService } from 'app/register/register.service';
-declare var $: any;
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: any[];
-}
+
 @Component({
   selector: 'app-testlist',
   templateUrl: './testlist.component.html',
@@ -30,7 +25,6 @@ export class TestlistComponent implements OnInit {
   selectedStd: any;
   saveresult: any = {};
   stdid: any;
-  public testTable: DataTable;
   constructor(
     private registerService: RegisterService,
     private activatedRoute: ActivatedRoute,
@@ -133,16 +127,15 @@ export class TestlistComponent implements OnInit {
     })
     this.clickViewTest = true;
     this.disptest = [];
+    for (let i = 0; i < this.disptest.length; i++) {
+      this.disptest[i].index = i + 1;
+    }
     this.submittedTest.forEach(element => {
       if (element.subid == sub.id) {
         this.disptest.push(element);
       }
     });
-    this.testTable = {
-      headerRow: ['#', 'Student', 'Test Name', 'Total Marks', 'Get Marks', 'Status', 'Actions'],
-      footerRow: ['#', 'Student', 'Test Name', 'Total Marks', 'Get Marks', 'Status', 'Actions'],
-      dataRows: this.disptest
-    };
+
   }
 
   cancelTest() {
@@ -161,6 +154,9 @@ export class TestlistComponent implements OnInit {
     this.saveresult.studentid = data.studentid;
     this.registerService.getTestforChecking(data.testid, this.studentId).subscribe((res: any) => {
       this.questions = res;
+      for (let i = 0; i < this.questions.length; i++) {
+        this.questions[i].index = i + 1;
+      }
       this.questions.forEach(element => {
         element.obtainmarks = '';
         element.remark = '';
