@@ -93,7 +93,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStandard();
-     this.addOptions = [{ id: 0, name: '', image: '' },{ id: 1, name: '', image: '' },{ id: 2, name: '', image: '' },{ id: 3, name: '', image: '' }];
+     this.addOptions = [{ id: 0, name: '', imageoption: null },{ id: 1, name: '', imageoption: null },{ id: 2, name: '', imageoption: null },{ id: 3, name: '', imageoption: null }];
     this.val++;
     // this.addAnswers = [{ name: this.ansVal }];
     this.ansVal++;
@@ -101,6 +101,7 @@ export class QuestionComponent implements OnInit {
       marks: ['', Validators.required, Validators.name,],
       duration: ['', Validators.required, Validators.name,],
     });
+    this.questionModel.imageque = null;
 
   }
 
