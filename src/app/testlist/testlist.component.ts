@@ -17,6 +17,7 @@ export class TestlistComponent implements OnInit {
   selectedSub: any;
   sub: any;
   disptest: any = [];
+  disptestlist: any = [];
   viewTest: boolean = false;
   clickViewTest: boolean = false;
   clickTest: boolean = false;
@@ -25,6 +26,7 @@ export class TestlistComponent implements OnInit {
   selectedStd: any;
   saveresult: any = {};
   stdid: any;
+  search: string = '';
   constructor(
     private registerService: RegisterService,
     private activatedRoute: ActivatedRoute,
@@ -127,6 +129,8 @@ export class TestlistComponent implements OnInit {
     })
     this.clickViewTest = true;
     this.disptest = [];
+    debugger
+    this.disptestlist = [];
     for (let i = 0; i < this.disptest.length; i++) {
       this.disptest[i].index = i + 1;
     }
@@ -137,6 +141,28 @@ export class TestlistComponent implements OnInit {
     });
 
   }
+  searchTest(val) {
+    debugger
+    if (this.search == '') {
+      this.disptest = this.disptestlist;
+    } else {
+      this.transforms(this.disptestlist, val);
+    }
+
+  }
+  transforms(register: any, searchValue: string) {
+    debugger
+    this.disptest = [];
+    this.disptestlist.forEach(element => {
+      if (element.testname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.grnumber.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.email.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      ) {
+        this.disptest.push(element);
+      }
+    })
+  }
+
 
   cancelTest() {
     this.clickTest = true;
@@ -174,4 +200,5 @@ export class TestlistComponent implements OnInit {
     })
 
   }
+
 }

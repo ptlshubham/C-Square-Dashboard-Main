@@ -823,8 +823,17 @@
           </button>
         </div>
       </div>
+      <div class="row" *ngIf="selectedstd">
+        <div class="ml-md-auto">
+          <div class="form-outline">
+            <input type="search" id="form1" class="form-control" placeholder="search" [(ngModel)]="search"
+              (keyup)="searchStudent($event.target.value)" aria-label="Search" />
+          </div>
+        </div>
+        &nbsp;
+      </div>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="selectedstd">
       <table class="table table-striped">
         <thead class="text-primary">
           <tr>
@@ -1143,8 +1152,17 @@
           </button>
         </div>
       </div>
+      <div class="row" *ngIf="selectedstd">
+        <div class="ml-md-auto">
+          <div class="form-outline">
+            <input type="search" id="form1" class="form-control" placeholder="search" [(ngModel)]="search"
+              (keyup)="searchStudent($event.target.value)" aria-label="Search" />
+          </div>
+        </div>
+        &nbsp;
+      </div>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="selectedstd">
 
       <table class="table table-striped ">
         <thead class="text-primary">

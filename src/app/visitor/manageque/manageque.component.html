@@ -132,6 +132,15 @@
                     </button>
                 </div>
             </div>
+            <div class="row">
+                <div class="ml-md-auto">
+                    <div class="form-outline">
+                        <input type="search" id="form1" class="form-control" placeholder="search" [(ngModel)]="search"
+                            (keyup)="searchQuestion($event.target.value)" aria-label="Search" />
+                    </div>
+                </div>
+                &nbsp;
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">

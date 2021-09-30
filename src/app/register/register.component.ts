@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   public registerModel: Register = new Register;
   public studentregisterModel: Studentregister = new Studentregister;
   public students: Studentregister[];
+  public studentslist: Studentregister[];
   public reg: Register[];
   public reglist: Register[];
   public stdlist: Std[] = [];
@@ -313,11 +314,34 @@ export class RegisterComponent implements OnInit {
   getStudent() {
     this.registerService.getStudentList(this.list).subscribe((data: any) => {
       this.students = data;
+      this.studentslist = data;
       for (let i = 0; i < this.students.length; i++) {
         this.students[i].index = i + 1;
       }
     });
   }
+  searchStudent(val) {
+    debugger
+    if (this.search == '') {
+      this.students = this.studentslist;
+    } else {
+      this.transforms(this.studentslist, val);
+    }
+
+  }
+  transforms(register: Studentregister[], searchValue: string) {
+    debugger
+    this.students = [];
+    this.studentslist.forEach(element => {
+      if (element.firstname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.grnumber.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.email.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      ) {
+        this.students.push(element);
+      }
+    })
+  }
+
   getSubmittedTest(id) {
     this.router.navigate(['/testlist'], {
       queryParams: {

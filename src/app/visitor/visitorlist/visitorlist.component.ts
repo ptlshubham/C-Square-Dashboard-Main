@@ -10,8 +10,11 @@ import { RegisterVisitor } from '../visitorreg/visitorreg.model';
 })
 export class VisitorlistComponent implements OnInit {
   public visitorList: RegisterVisitor[];
+  public visitor: RegisterVisitor[];
   public visitorModel: RegisterVisitor = new RegisterVisitor;
   isactive: boolean;
+  search: string = '';
+
   constructor(
     private VisitorService: VisitorService,
     private apiService: ApiService
@@ -23,11 +26,30 @@ export class VisitorlistComponent implements OnInit {
   }
   getAllVisitor() {
     this.VisitorService.getAllVisitorList().subscribe((data: any) => {
+      this.visitor = data;
       this.visitorList = data;
       for (let i = 0; i < this.visitorList.length; i++) {
         this.visitorList[i].index = i + 1;
       }
     });
+  }
+  searchVisitor(val) {
+    if (this.search == '') {
+      this.visitor = this.visitorList;
+    } else {
+      this.transforms(this.visitorList, val);
+    }
+
+  }
+  transforms(register: RegisterVisitor[], searchValue: string) {
+    this.visitor = [];
+    this.visitorList.forEach(element => {
+      if (element.firstname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.email.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      ) {
+        this.visitor.push(element);
+      }
+    })
   }
   contactOrNot(data, id) {
     this.visitorModel.id = id;
@@ -38,8 +60,9 @@ export class VisitorlistComponent implements OnInit {
       this.getAllVisitor();
     })
   }
+
+
   viewVisitorDetails(data) {
-    debugger
     this.visitorModel = data
   }
 }

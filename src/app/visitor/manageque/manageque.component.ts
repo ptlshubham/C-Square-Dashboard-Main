@@ -17,6 +17,7 @@ export class ManagequeComponent implements OnInit {
   public stdlist: Std[];
   public subjects: Subject[];
   public que: Question[];
+  public quelist: Question[];
   public stdId: any;
   selectedSubjectId: any;
   selectedstd: any;
@@ -45,6 +46,7 @@ export class ManagequeComponent implements OnInit {
   standardName: string = '';
   subjetId: number;
   subjectName: string = '';
+  search: string = '';
   constructor(
     private manageService: ManageService,
     private questionService: QuestionService,
@@ -204,10 +206,29 @@ export class ManagequeComponent implements OnInit {
   getQueList() {
     this.VisitorService.getVisitorQue(this.subjectId).subscribe((data: any) => {
       this.que = data;
+      this.quelist = data;
       for (let i = 0; i < this.que.length; i++) {
         this.que[i].index = i + 1;
       }
     });
+  }
+  searchQuestion(val) {
+    debugger
+    if (this.search == '') {
+      this.que = this.quelist;
+    } else {
+      this.transforms(this.quelist, val);
+    }
+
+  }
+  transforms(register: Question[], searchValue: string) {
+    debugger
+    this.que = [];
+    this.quelist.forEach(element => {
+      if (element.question.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())) {
+        this.que.push(element);
+      }
+    })
   }
   removeQuestion(id) {
     this.VisitorService.removeVisitorQue(id).subscribe((data: any) => {
@@ -260,9 +281,7 @@ export class ManagequeComponent implements OnInit {
     this.totalQuestions = this.checkedQuestionList.length;
     //this.checkedQuestionList = JSON.stringify(this.checkedQuestionList);
   }
-  addTest() {
 
-  }
   updateTotals() {
     this.totalMarks = 0;
     this.duration = 0;
