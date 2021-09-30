@@ -107,11 +107,12 @@
               <td class="text-center">{{ item.quetype }}</td>
               <td class="text-center" *ngIf="item.question == 'undefined'"></td>
               <td class="text-center" *ngIf="item.question != 'undefined'">{{ item.question }}</td>
-              <td>
-                <div class="img-container">
+              <td class="text-center">
+                <div class="img-container" *ngIf="item.imageque != null">
                   <img *ngIf="item.imageque != null" src="http://localhost:8090{{ item.imageque }}"
                     style="height: 40% !important;width: 40% !important;" />
                 </div>
+                <label *ngIf="item.imageque == null" style="font-size: larger;font-weight: bold;">-</label>
               </td>
               <td class="text-center">{{ item.marks }} Marks</td>
               <td class="text-center">{{ item.time }} Minute</td>
@@ -159,9 +160,9 @@
           <tr *ngFor="let row of queTable.dataRows;let i=index">
             <td>
               <div class="form-check">
+                <input class="form-check-input" [(ngModel)]="row.isactive" name="list_name" value="{{ row.id }}"
+                (change)="isAllSelected()" type="checkbox" />
                 <label class="form-check-label">
-                  <input class="form-check-input" [(ngModel)]="row.isactive" name="list_name" value="{{ row.id }}"
-                    (change)="isAllSelected()" type="checkbox" />
                   <span class="form-check-sign"></span>
                 </label>
               </div>
@@ -248,21 +249,27 @@
               </p>
             </div>
             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-              <div class="fileinput-new thumbnail">
+              <div class="fileinput-new thumbnail" *ngIf=" questionModel.imageque == null" >
                 <img src="./assets/img/image_placeholder.jpg" alt="..."
-                  *ngIf="questionModel.imageque == 'null' || questionModel.imageque == null" />
+                  *ngIf=" questionModel.imageque == null" />
                 <img src="http://localhost:8090{{questionModel.imageque}}"
-                  *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null">
+                  *ngIf="questionModel.imageque != null">
+              </div>
+              <div class="fileinput-new thumbnail" *ngIf="questionModel.imageque != null">
+                <img src="./assets/img/image_placeholder.jpg" alt="..."
+                  *ngIf=" questionModel.imageque == null" />
+                <img src="http://localhost:8090{{questionModel.imageque}}"
+                  *ngIf="questionModel.imageque != null">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
                 <span class="btn btn-rose btn-round btn-file">
-                  <span *ngIf="questionModel.imageque == 'null' || questionModel.imageque == null">Select Image</span>
-                  <span *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null">Change</span>
+                  <span *ngIf=" questionModel.imageque == null">Select Image</span>
+                  <span *ngIf=" questionModel.imageque != null">Change</span>
                   <input type="file" id="questionImage" name="questionImage" (change)="select($event)" />
                 </span>
                 <a href="javascript:void(0)" class="btn btn-danger btn-round "
-                  *ngIf="questionModel.imageque != 'null' || questionModel.imageque != null"
+                  *ngIf=" questionModel.imageque != null"
                   (click)="removeTempPic()"><i class="fa fa-times"></i> Remove</a>
               </div>
             </div>
@@ -316,13 +323,14 @@
                 </div> -->
         </div>
         <div *ngIf="selectedQue == 'MCQ'">
+          <!-- option-1 -->
           <div class="row" *ngFor="let add of addOptions; let ind = index">
-            <div class="col-md-4">
+            <div class="col-md-4" >
               <label class="col-form-label" for="question">
                 Options {{ ind + 1 }}</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="options" name="options" placeholder=" Enter option value"
-                  [(ngModel)]="add.option" />
+                <input type="text" class="form-control"  name="{{add.id}}" placeholder=" Enter option value"
+                  [(ngModel)]="add.optionlist"  />
               </div>
             </div>
             <div class="col-md-3">
@@ -333,59 +341,64 @@
                 </p>
               </div>
               <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                <div class="fileinput-new thumbnail">
-                  <img src="./assets/img/image_placeholder.jpg" alt="..."
-                    *ngIf="add.imageoption == 'null' || add.imageoption == null" />
+                <div class="fileinput-new thumbnail"  *ngIf=" add.imageoption != null">
                   <img src="http://localhost:8090{{add.imageoption}}"
-                    *ngIf="add.imageoption != 'null' || add.imageoption != null">
+                    *ngIf=" add.imageoption != null">
+                </div>
+                <div class="fileinput-new thumbnail"  *ngIf=" add.imageoption == null">
+                  <img src="./assets/img/image_placeholder.jpg" alt="..."
+                    *ngIf=" add.imageoption == null " />
+               
                 </div>
                 <!-- <div class="fileinput-preview fileinput-exists thumbnail"></div>x -->
                 <div>
                   <span class="btn btn-rose btn-round btn-file">
-                    <span *ngIf="add.imageoption == 'null' || add.imageoption == null">Select Image</span>
-                    <span *ngIf="add.imageoption != 'null' || add.imageoption != null">Change</span>
+                    <span *ngIf=" add.imageoption == null">Select Image</span>
+                    <span *ngIf=" add.imageoption != null">Change</span>
                     <input type="file" id="optionsImage" name="optionsImage" (change)="imageOption($event , ind)" />
                   </span>
-                  <a href="javascript:void(0)" class="btn btn-danger btn-round"
-                    *ngIf="add.imageoption != 'null' || add.imageoption != null" (click)="removeOptionTempImg(ind)"><i
+                  <a href="javascript:void(0)" claass="btn btn-danger btn-round"
+                    *ngIf="add.imageoption != null" (click)="removeOptionTempImg(ind)"><i
                       class="fa fa-times"></i> Remove</a>
                 </div>
               </div>
             </div>
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
               <i class="fa fa-plus-circle" aria-hidden="true" (click)="addOptionsList()"
                 style="font-size: 33px !important; margin-top: 54% !important"></i>
             </div>
-            <div class="col-md-1" *ngIf="ind > 0">
-              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeOptionsList(ind)" style="
+            <div class="col-md-1" >
+              <i class="fa fa-times-circle" aria-hidden="true" (click)="removeOptionsList(ind)" style="
                   font-size: 33px !important;
                   margin-top: 54% !important;
                   margin-left: -80px !important;
                 "></i>
-            </div>
+            </div> -->
           </div>
+      
+
         </div>
         <div *ngIf="selectedQue == 'MCQ'">
-          <div class="row" *ngFor="let add of addAnswers; let ind = index">
+          <div class="row" >
             <div class="col-md-4">
               <div class="form-group">
-                <label class="col-form-label" for="answer">Answer {{ ind + 1 }}
+                <label class="col-form-label" for="answer">Answer
                 </label>
                 <input type="text" class="form-control" id="answer" name="answer" placeholder="Enter correct answer"
-                  [(ngModel)]="add.answer" />
+                  [(ngModel)]="questionModel.answer" />
               </div>
             </div>
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
               <i class="fa fa-plus-circle" aria-hidden="true" (click)="addAnswersList()"
                 style="font-size: 33px !important; margin-top: 54% !important"></i>
             </div>
             <div class="col-md-1" *ngIf="ind > 0">
-              <i class="fa fa-times-circle-o" aria-hidden="true" (click)="removeAnswersList(ind)" style="
+              <i class="fa fa-times-circle" aria-hidden="true" (click)="removeAnswersList(ind)" style="
                   font-size: 33px !important;
                   margin-top: 54% !important;
                   margin-left: -80px !important;
                 "></i>
-            </div>
+            </div> -->
           </div>
         </div>
       </form>

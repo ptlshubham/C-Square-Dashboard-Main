@@ -12,7 +12,7 @@ export class Question {
         public testname?: string,
         public totalque?: number,
         public options?: any[],
-        public answer?: any[],
+        public answer?: string,
         public marks?: number,
         public time?: number,
         public updatedate?: Date,
@@ -23,6 +23,7 @@ export class Question {
         public imageoption?: string,
         public addOptions?: [],
         public index?: number
+    
 
 
 

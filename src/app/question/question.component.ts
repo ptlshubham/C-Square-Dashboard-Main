@@ -86,14 +86,15 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStandard();
-    this.addOptions = [{ id: this.val, name: '', image: '' }];
+    this.addOptions = [{ id: 0, name: '', imageoption: null }, { id: 1, name: '', imageoption: null }, { id: 2, name: '', imageoption: null }, { id: 3, name: '', imageoption: null }];
     this.val++;
-    this.addAnswers = [{ name: this.ansVal }];
+    // this.addAnswers = [{ name: this.ansVal }];
     this.ansVal++;
     this.questionRegForm = this.fm.group({
       marks: ['', Validators.required, Validators.name,],
       duration: ['', Validators.required, Validators.name,],
     });
+    this.questionModel.imageque = null;
 
   }
 
@@ -211,14 +212,14 @@ export class QuestionComponent implements OnInit {
 
   saveNewQuestion(data) {
     if (this.image == undefined) {
-      this.questionModel.imageque == 'null';
+      this.questionModel.imageque = null;
     }
     else {
       data.imageque = this.image;
     }
     this.addOptions.forEach(element => {
       if (element.image == '') {
-        element.image == 'null'
+        element.image == null
       }
     });
     data.options = this.addOptions;
@@ -299,9 +300,11 @@ export class QuestionComponent implements OnInit {
     this.questionModel = data;
     this.questionService.getOptionvalue(this.questionModel.id).subscribe((res: any) => {
       this.questionModel.addOptions = res;
+      this.addOptions = res;
+      debugger
     });
     this.questionService.getAnswervalue(this.questionModel.id).subscribe((res: any) => {
-      this.questionModel.answer = res;
+      this.questionModel.answer = res[0].answer;
     })
     this.selectedQue = data.quetype;
     this.updateButton = true;
