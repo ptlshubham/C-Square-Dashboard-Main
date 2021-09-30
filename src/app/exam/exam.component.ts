@@ -1,4 +1,3 @@
-import { ManageModule } from './../manage/manage.module';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ManageService } from '../manage/manage.service';
@@ -7,12 +6,7 @@ import { Subject } from '../manage/subject/subject.model';
 import { ExamService } from './exam.service';
 import { Question } from 'app/question/question.model';
 import { ApiService } from 'app/api.service';
-declare var $: any;
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: any[];
-}
+
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -119,13 +113,13 @@ export class ExamComponent implements OnInit {
   selectedTest: any;
   defaultStandard: any;
   public TestList: Question[] = [];
+  public test: Question[] = [];
   queList: any;
   selectedSubId: any;
   filterTests = [];
   filterQuestions = [];
   selectedTestData: any;
-  public testTable: DataTable;
-
+  search: string = '';
   ruleBoxFlag: boolean = false;
   questionBoxFlag: boolean = false;
   testInfoBoxFlag: boolean = false;
@@ -142,27 +136,7 @@ export class ExamComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  ngAfterViewInit() {
-    $('#datatable').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [5, 10, 25, -1],
-        [5, 10, 25, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records",
-      }
 
-    });
-
-    var table = $('#datatable').DataTable();
-
-    table.on('click', '.like', function () {
-      alert('You clicked on Like button');
-    });
-  }
 
   selectTest(id) {
     this.filterQuestions = [];
@@ -247,11 +221,32 @@ export class ExamComponent implements OnInit {
   getTestList() {
     this.examService.getTest(this.selectedSubId).subscribe((data: any) => {
       this.TestList = data;
+      this.test = data;
       for (let i = 0; i < this.TestList.length; i++) {
         this.TestList[i].index = i + 1;
       }
     });
   }
+  searchTest(val) {
+    debugger
+    if (this.search == '') {
+      this.test = this.TestList;
+    } else {
+      this.transform(this.TestList, val);
+    }
+
+  }
+  transform(test: Question[], searchValue: string) {
+    debugger
+    this.test = [];
+    this.TestList.forEach(element => {
+      if (element.testname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())) {
+        this.test.push(element);
+      }
+    })
+  }
+
+
   ViewTestQue(val) {
     this.examService.getViewTest(val.id).subscribe((data: any) => {
       this.queList = data;
@@ -270,4 +265,5 @@ export class ExamComponent implements OnInit {
       this.getTestList();
     })
   }
+
 }

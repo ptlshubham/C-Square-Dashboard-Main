@@ -8,13 +8,6 @@ import { Register } from './register.model';
 import { RegisterService } from './register.service';
 import { Studentregister } from './student.model';
 
-
-declare var $: any;
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: any[];
-}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -25,6 +18,7 @@ export class RegisterComponent implements OnInit {
   public studentregisterModel: Studentregister = new Studentregister;
   public students: Studentregister[];
   public reg: Register[];
+  public reglist: Register[];
   public stdlist: Std[] = [];
   public subjectList: Subject[] = [];
   public subjectObj: Subject[] = [];
@@ -45,6 +39,7 @@ export class RegisterComponent implements OnInit {
   selStds: string = '';
   selectedStdArray = [];
   prferTime: any = []
+  search: string = '';
   selectedTime: any;
   imageError: string;
   isImageSaved: boolean = true;
@@ -68,9 +63,6 @@ export class RegisterComponent implements OnInit {
   subjectData: any = [];
   submittedTest: any = [];
   public Roles = localStorage.getItem('role');
-  public studentTable: DataTable;
-  public teacherTable: DataTable;
-  public StuTeacherTable: DataTable;
   constructor(
     private router: Router,
     private registerService: RegisterService,
@@ -123,27 +115,6 @@ export class RegisterComponent implements OnInit {
       this.openStuAdd = false;
     }
 
-  }
-  ngAfterViewInit() {
-    $('#datatable').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [5, 10, 25, -1],
-        [5, 10, 25, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records",
-      }
-
-    });
-
-    var table = $('#datatable').DataTable();
-
-    table.on('click', '.like', function () {
-      alert('You clicked on Like button');
-    });
   }
 
   studentAttandance(id) {
@@ -367,10 +338,32 @@ export class RegisterComponent implements OnInit {
   getTeacher() {
     this.registerService.getTeacherList().subscribe((data: any) => {
       this.reg = data;
+      this.reglist = data;
       for (let i = 0; i < this.reg.length; i++) {
         this.reg[i].index = i + 1;
       }
     });
+  }
+  searchTeacher(val) {
+    debugger
+    if (this.search == '') {
+      this.reg = this.reglist;
+    } else {
+      this.transform(this.reglist, val);
+    }
+
+  }
+  transform(register: Register[], searchValue: string) {
+    debugger
+    this.reg = [];
+    this.reglist.forEach(element => {
+      if (element.firstname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.qualification.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.email.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      ) {
+        this.reg.push(element);
+      }
+    })
   }
 
   editTeacherData(data) {

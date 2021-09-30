@@ -10,14 +10,6 @@ import { Question } from './question.model';
 import { QuestionService } from './question.service';
 import { Quetype } from './quetype.model';
 
-
-declare var $: any;
-
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: any[];
-}
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -33,6 +25,7 @@ export class QuestionComponent implements OnInit {
   public stdlist: Std[] = [];
   public questionModel: Question = {};
   public que: Question[] = [];
+  public quelist: Question[] = [];
   public editQue: Question[] = [];
   public quetypeModel: Quetype[] = [];
   public type: Quetype[] = [];
@@ -52,6 +45,7 @@ export class QuestionComponent implements OnInit {
   addAnswers: any = [];
   ansVal = 0;
   subID: any;
+  search: string = '';
 
   // Test Create Modal Variables
   isMasterSel: boolean = false;
@@ -64,14 +58,13 @@ export class QuestionComponent implements OnInit {
   standardName: string = '';
   subjectId: number;
   subjectName: string = '';
-  public table: DataTable;
   public Roles = localStorage.getItem('role');
   imageError: string;
   isImageSaved: boolean = true;
   cardImageBase64: string;
   image: any;
   questionRegForm: FormGroup;
-  public queTable: DataTable;
+
   constructor(
     private manageService: ManageService,
     private questionService: QuestionService,
@@ -268,14 +261,30 @@ export class QuestionComponent implements OnInit {
   getQueList(id) {
     this.questionService.getAllQuestion(id).subscribe((data: any) => {
       this.que = data;
+      this.quelist = data;
       for (let i = 0; i < this.que.length; i++) {
         this.que[i].index = i + 1;
       }
-
-
-
     });
+  }
+  searchQuestion(val) {
+    debugger
+    if (this.search == '') {
+      this.que = this.quelist;
+    } else {
+      this.transform(this.quelist, val);
+    }
 
+  }
+  transform(test: Question[], searchValue: string) {
+    debugger
+    this.que = [];
+    this.quelist.forEach(element => {
+      if (element.quetype.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        element.question.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())) {
+        this.que.push(element);
+      }
+    })
   }
   removeQuestion(id) {
     this.questionService.removeQueList(id).subscribe((data: any) => {
@@ -290,12 +299,10 @@ export class QuestionComponent implements OnInit {
     this.questionModel = data;
     this.questionService.getOptionvalue(this.questionModel.id).subscribe((res: any) => {
       this.questionModel.addOptions = res;
-      debugger
     });
     this.questionService.getAnswervalue(this.questionModel.id).subscribe((res: any) => {
       this.questionModel.answer = res;
     })
-    debugger
     this.selectedQue = data.quetype;
     this.updateButton = true;
     this.submitButton = false;

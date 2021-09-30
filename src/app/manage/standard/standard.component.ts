@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'app/api.service';
 import { ManageService } from '../manage.service';
 import { Std } from './standard.model';
-declare var require: any
-declare var $: any;
 
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: any[];
-}
 @Component({
   selector: 'app-standard',
   templateUrl: './standard.component.html',
@@ -19,7 +12,9 @@ export class StandardComponent implements OnInit {
   public StdModel: Std = new Std;
   public STD: Std[] = [];
   public editStd: Std[] = [];
-  public standardTable: DataTable
+
+  stdlist: Std[] = []
+  search: string = '';
   constructor(
     private manageService: ManageService,
     private apiService: ApiService) {
@@ -40,11 +35,29 @@ export class StandardComponent implements OnInit {
   }
   getStdList() {
     this.manageService.getStdList().subscribe((data: any) => {
+      this.stdlist = data;
       this.STD = data;
       for (let i = 0; i < this.STD.length; i++) {
         this.STD[i].index = i + 1;
       }
     });
+  }
+  searchStandard(val) {
+    if (this.search == '') {
+      this.STD = this.stdlist;
+    } else {
+      this.transform(this.stdlist, val);
+    }
+
+  }
+  transform(STD: Std[], searchValue: string) {
+
+    this.STD = [];
+    STD.forEach(element => {
+      if (element.stdname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())) {
+        this.STD.push(element);
+      }
+    })
   }
   removeStandard(id) {
     this.manageService.removeStdList(id).subscribe((req) => {
@@ -56,4 +69,5 @@ export class StandardComponent implements OnInit {
   editStandard(data) {
     this.editStd = data;
   }
+
 }
