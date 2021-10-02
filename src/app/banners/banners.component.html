@@ -110,16 +110,16 @@
                 <!-- <td>Slider</td> -->
                 <td>{{ item.name }}</td>
 
-                <td>
-                  <div class="img-container">
+                <td style="height: 50% !important;width: 50%;">
+                  <div class="img-container" style="height: 50% !important;width: 50%;">
                     <img src="http://localhost:8090{{ item.bannersimage }}" />
                   </div>
                 </td>
                 <td>
-                  <button class="btn btn-success" *ngIf="item.status" (click)="deactiveBanners(i)">
+                  <button class="btn btn-success" *ngIf="item.status" (click)="deactiveBanners(item.index)">
                     Active
                   </button>
-                  <button class="btn btn-danger" *ngIf="!item.status" (click)="activeBanners(i)">
+                  <button class="btn btn-danger" *ngIf="!item.status" (click)="activeBanners(item.index)">
                     Deactive
                   </button>
                 </td>

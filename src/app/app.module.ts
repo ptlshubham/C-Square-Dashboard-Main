@@ -65,6 +65,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         AdminLayoutComponent,
         AuthLayoutComponent,
 
+
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

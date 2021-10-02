@@ -249,17 +249,13 @@
               </p>
             </div>
             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-              <div class="fileinput-new thumbnail" *ngIf=" questionModel.imageque == null" >
-                <img src="./assets/img/image_placeholder.jpg" alt="..."
-                  *ngIf=" questionModel.imageque == null" />
-                <img src="http://localhost:8090{{questionModel.imageque}}"
-                  *ngIf="questionModel.imageque != null">
+              <div class="fileinput-new thumbnail" *ngIf=" questionModel.imageque == null">
+                <img src="./assets/img/image_placeholder.jpg" alt="..." *ngIf=" questionModel.imageque == null" />
+                <img src="http://localhost:8090{{questionModel.imageque}}" *ngIf="questionModel.imageque != null">
               </div>
               <div class="fileinput-new thumbnail" *ngIf="questionModel.imageque != null">
-                <img src="./assets/img/image_placeholder.jpg" alt="..."
-                  *ngIf=" questionModel.imageque == null" />
-                <img src="http://localhost:8090{{questionModel.imageque}}"
-                  *ngIf="questionModel.imageque != null">
+                <img src="./assets/img/image_placeholder.jpg" alt="..." *ngIf=" questionModel.imageque == null" />
+                <img src="http://localhost:8090{{questionModel.imageque}}" *ngIf="questionModel.imageque != null">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
@@ -268,8 +264,7 @@
                   <span *ngIf=" questionModel.imageque != null">Change</span>
                   <input type="file" id="questionImage" name="questionImage" (change)="select($event)" />
                 </span>
-                <a href="javascript:void(0)" class="btn btn-danger btn-round "
-                  *ngIf=" questionModel.imageque != null"
+                <a href="javascript:void(0)" class="btn btn-danger btn-round " *ngIf=" questionModel.imageque != null"
                   (click)="removeTempPic()"><i class="fa fa-times"></i> Remove</a>
               </div>
             </div>
@@ -325,12 +320,12 @@
         <div *ngIf="selectedQue == 'MCQ'">
           <!-- option-1 -->
           <div class="row" *ngFor="let add of addOptions; let ind = index">
-            <div class="col-md-4" >
+            <div class="col-md-4">
               <label class="col-form-label" for="question">
                 Options {{ ind + 1 }}</label>
               <div class="form-group">
-                <input type="text" class="form-control"  name="{{add.id}}" placeholder=" Enter option value"
-                  [(ngModel)]="add.optionlist"  />
+                <input type="text" class="form-control" name="{{add.id}}" placeholder=" Enter option value"
+                  [(ngModel)]="add.optionlist" />
               </div>
             </div>
             <div class="col-md-3">
@@ -341,14 +336,12 @@
                 </p>
               </div>
               <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                <div class="fileinput-new thumbnail"  *ngIf=" add.imageoption != null">
-                  <img src="http://localhost:8090{{add.imageoption}}"
-                    *ngIf=" add.imageoption != null">
+                <div class="fileinput-new thumbnail" *ngIf=" add.imageoption != null">
+                  <img src="http://localhost:8090{{add.imageoption}}" *ngIf=" add.imageoption != null">
                 </div>
-                <div class="fileinput-new thumbnail"  *ngIf=" add.imageoption == null">
-                  <img src="./assets/img/image_placeholder.jpg" alt="..."
-                    *ngIf=" add.imageoption == null " />
-               
+                <div class="fileinput-new thumbnail" *ngIf=" add.imageoption == null">
+                  <img src="./assets/img/image_placeholder.jpg" alt="..." *ngIf=" add.imageoption == null " />
+
                 </div>
                 <!-- <div class="fileinput-preview fileinput-exists thumbnail"></div>x -->
                 <div>
@@ -357,9 +350,8 @@
                     <span *ngIf=" add.imageoption != null">Change</span>
                     <input type="file" id="optionsImage" name="optionsImage" (change)="imageOption($event , ind)" />
                   </span>
-                  <a href="javascript:void(0)" claass="btn btn-danger btn-round"
-                    *ngIf="add.imageoption != null" (click)="removeOptionTempImg(ind)"><i
-                      class="fa fa-times"></i> Remove</a>
+                  <a href="javascript:void(0)" claass="btn btn-danger btn-round" *ngIf="add.imageoption != null"
+                    (click)="removeOptionTempImg(ind)"><i class="fa fa-times"></i> Remove</a>
                 </div>
               </div>
             </div>
@@ -375,11 +367,11 @@
                 "></i>
             </div> -->
           </div>
-      
+
 
         </div>
         <div *ngIf="selectedQue == 'MCQ'">
-          <div class="row" >
+          <div class="row">
             <div class="col-md-4">
               <div class="form-group">
                 <label class="col-form-label" for="answer">Answer
@@ -443,6 +435,20 @@
                   <input type="text" [ngModel]="testName" class="form-control" name="testname" value="{{ testName }}" />
                 </div>
               </div>
+              <div class="row">
+                <label for="totalduration" class="col-sm-2 col-form-label">Select Test Date:</label>
+                <div class="col-sm-2">
+                  <!-- code for date and time picker -->
+                  <input type="date" id="testdate" name="testdate" [ngModel]="testdate">
+
+
+                </div>
+                <div class="col-sm-2">
+                  <!-- code for date and time picker -->
+                  <input type="time" id="timeslots" name="timeslots" [ngModel]="timeslots">
+
+                </div>
+              </div>
               <div class="form-group row">
                 <label for="standard" class="col-sm-2 col-form-label">Standard:
                 </label>
@@ -478,6 +484,7 @@
                     value="{{ duration }}" />
                 </div>
               </div>
+
               <div class="card">
                 <div class="card-body">
                   <div class="table-responsive">

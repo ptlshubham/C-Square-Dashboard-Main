@@ -228,7 +228,6 @@ export class ExamComponent implements OnInit {
     });
   }
   searchTest(val) {
-    debugger
     if (this.search == '') {
       this.test = this.TestList;
     } else {
@@ -237,7 +236,6 @@ export class ExamComponent implements OnInit {
 
   }
   transform(test: Question[], searchValue: string) {
-    debugger
     this.test = [];
     this.TestList.forEach(element => {
       if (element.testname.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())) {

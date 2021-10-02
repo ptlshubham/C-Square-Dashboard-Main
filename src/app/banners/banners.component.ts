@@ -178,12 +178,12 @@ export class BannersComponent implements OnInit {
     })
   }
   activeBanners(id) {
-    this.webImage[id].status = true;
+    this.webImage[id - 1].status = true;
     this.bannersServie.activeDeavctiveWebBanners(this.webImage[id]).subscribe((req) => {
     })
   }
   deactiveBanners(id) {
-    this.webImage[id].status = false;
+    this.webImage[id - 1].status = false;
     this.bannersServie.activeDeavctiveWebBanners(this.webImage[id]).subscribe((req) => {
 
     })

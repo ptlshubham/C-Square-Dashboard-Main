@@ -10,6 +10,8 @@ import { Question } from './question.model';
 import { QuestionService } from './question.service';
 import { Quetype } from './quetype.model';
 
+declare var require: any
+declare var $: any;
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -46,6 +48,8 @@ export class QuestionComponent implements OnInit {
   ansVal = 0;
   subID: any;
   search: string = '';
+  timeslots: any;
+  testdate: any;
 
   // Test Create Modal Variables
   isMasterSel: boolean = false;
@@ -64,7 +68,10 @@ export class QuestionComponent implements OnInit {
   cardImageBase64: string;
   image: any;
   questionRegForm: FormGroup;
-
+  selctedDate: any;
+  model: Date;
+  public selectedMoment = new Date();
+  model2: Date;
   constructor(
     private manageService: ManageService,
     private questionService: QuestionService,
@@ -72,6 +79,7 @@ export class QuestionComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private fm: FormBuilder,
+
   ) {
     this.activatedRoute.queryParams.subscribe((res: any) => {
       this.Ref_id = res.val;
@@ -83,12 +91,17 @@ export class QuestionComponent implements OnInit {
     this.questionList = false;
     this.isMasterSel = false;
   }
+  test(data) {
+
+    this.selctedDate = data.next
+    debugger
+  }
 
   ngOnInit(): void {
+
     this.getStandard();
     this.addOptions = [{ id: 0, name: '', imageoption: null }, { id: 1, name: '', imageoption: null }, { id: 2, name: '', imageoption: null }, { id: 3, name: '', imageoption: null }];
     this.val++;
-    // this.addAnswers = [{ name: this.ansVal }];
     this.ansVal++;
     this.questionRegForm = this.fm.group({
       marks: ['', Validators.required, Validators.name,],
@@ -98,23 +111,9 @@ export class QuestionComponent implements OnInit {
 
   }
 
-
-  ngAfterContentInit() {
-    $('#queTable').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [5, 10, 25, -1],
-        [5, 10, 25, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records",
-      }
-
-    });
+  toggleDateTimeState($event) {
+    $event.stopPropagation();
   }
-
 
   addOptionsList() {
     this.val++;
@@ -166,9 +165,6 @@ export class QuestionComponent implements OnInit {
     this.manageService.getStdList().subscribe((data: any) => {
       this.stdlist = data;
     });
-  }
-  addTest() {
-
   }
 
   closeQue() {
@@ -377,8 +373,10 @@ export class QuestionComponent implements OnInit {
   }
 
   createTest(data: any) {
+    console.log(data);
     console.log('Create Test');
 
+    debugger
     data.questionlist = this.checkedQuestionList;
     this.questionService.saveTest(data).subscribe((res: any) => {
       this.apiService.showNotification('top', 'right', 'Test created Successfully.', 'success');

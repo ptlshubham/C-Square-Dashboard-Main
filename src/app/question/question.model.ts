@@ -22,8 +22,10 @@ export class Question {
         public optionlist?: string,
         public imageoption?: string,
         public addOptions?: [],
+        public testdate?: string,
+        public testtime?: string,
         public index?: number
-    
+
 
 
 
